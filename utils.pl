@@ -1,3 +1,8 @@
+invert(List1,List2):- reverse(List1,List2,[]).
+
+reverse([],List2,List2).
+reverse([H|T],List2,Acc) :- reverse(T,List2,[H|Acc]).
+
 insert_elem(I,L1,E,L2):-insert_elem_aux(I,L1,E,[],L3),
                         invert(L3,L2).
 
