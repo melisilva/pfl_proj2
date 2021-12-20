@@ -18,8 +18,8 @@ direction(hor).
 
 play(R, C, H, V) :-
     initialBoard(X),
-    nth0(R, X, line),
-    nth0(C, line, col),
+    nth0(R, X, FChar),
+    nth0(C, FChar, RChar),
     I1 is R + H,
     nth0(I1, X, line1),
     I2 is C + V,
