@@ -1,0 +1,11 @@
+initialBoard([
+    [black,black,black,black,black,black,black,black,black],
+    [black,black,black,black,black,black,black,black,black],
+    [empty,empty,empty,empty,empty,empty,empty,empty,empty],
+    [empty,empty,empty,empty,empty,empty,empty,empty,empty],
+    [empty,empty,empty,empty,empty,empty,empty,empty,empty],
+    [empty,empty,empty,empty,empty,empty,empty,empty,empty],
+    [empty,empty,empty,empty,empty,empty,empty,empty,empty],
+    [white,white,white,white,white,white,white,white,white],
+    [white,white,white,white,white,white,white,white,white]
+]).
