@@ -24,7 +24,10 @@ In the penultimate column we can do 2 vertical + 1 horizontal, if we do the othe
 to move the horizontal way towards the left (same with the last column) 
 
 Players can only pick spaces that have either the value "black" or "white"
-*/
+
+
+To check if either player won we need to see if the first two lists are filled with white, if so white player won or
+if the last two lists are filled with black, if so black player won*/
 
 symbol(empty,S):- S='-'.
 symbol(black,S):- S='B'.
