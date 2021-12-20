@@ -11,6 +11,22 @@ initialBoard([
 ]).
 
 /*
+initialBoard(6, GameState):- generate36Board(GameState).
+initialBoard(7, GameState):- generate49Board(GameState).
+initialBoard(9, GameState):- generate81Board(GameState).
+
+generate36Board(GameState):- buildBoard([], GameState,).
+generate49Board(GameState):- buildBoard([],GameState,).
+generate81Board(GameState):- buildBoard([], GameState, ).
+
+buildBoard(FinalBoard, FinalBoard, NumRows, NumRows,_,0,0).
+buildBoard(InitialBoard, FinalBoard, RowIndex, NumRows, NumCols, black, white):- buildRow([],FinalRow,0,NumCols,black,white,nbp,nwp),
+                                                                                 append(InitialBoard,FinalRow,UpdatedBoard),
+                                                                                NewIndex is RowIndex+1,
+                                                                                 buildBoard(UpdatedBoard, FinalBoard, NewIndex, NumRows, NumCols,nbp, nwp).*/
+
+
+/*
 Okay so it's a text based game, player needs to provide a row and a column,
 both attributes between 0 and 8 (or 1 to 9). Also player needs to 
 say if they want to start to move horizontally or vertically.
