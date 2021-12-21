@@ -35,6 +35,7 @@ isValidPos(R, C, V, H, X) :-
 
 play(R, C, V, H, X1) :-
     initialBoard(X),
+    check_horizontal_and_vertical(H,V),
     (isValidPos(R, C, V, H, X)
     -> printBoard(X),
        nth0(R, X, Line),
@@ -85,3 +86,4 @@ list_member('white',Row), if we get yes, Player black hasn't won. If we get no t
 check_WhitePlayer_won(Y):-initialBoard(X), nth0(7, X, Row), \+list_member(0,Row), \+list_member(1,Row), nth0(8,X,Row1),  \+list_member(0,Row1), \+list_member(1,Row1).
 check_BlackPlayer_won(Y):-initialBoard(X), nth0(0, X, Row), \+list_member(0,Row), \+list_member(-1,Row), nth0(1,X,Row1),  \+list_member(0,Row1), \+list_member(-1,Row1).
 
+check_horizontal_and_vertical(H,V):- ((H==2; H== (-2)),(V==1; V== (-1))); ((H==1; H== (-1)),(V==2; V== (-2))).
