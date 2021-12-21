@@ -1,3 +1,30 @@
+:-include('./input.pl').
+:-include('./board.pl').
+
+
+changePlayer(P, P1, P1, P2).
+changePlayer(P, P2, P1, P2).
+changePlayer(P, NP, P1, P2) :-
+    (P = P1
+    -> changePlayer(P, P2, P1, P2)
+    ; changePlayer(P, P1, P1, P2)
+    ).
+
+loop(-1, _).
+loop(I, X, CP, P1, P2) :-
+    askForInput(R, C, V, H),
+    play(R, C, V, H, X, X1),
+    (check_WhitePlayer_won(P1) ; check_BlackPlayer_Won(P2)
+    -> loop(-1, X1, P1, P2)
+    ; changePlayer(P, NP, P1, P2), loop(0, X1, NP, P1, P2)
+    ).
+
+start() :-
+    initialBoard(X),
+    getPlayer1(P1),
+    getPlayer2(P2),
+    loop(0, X, P1, P1, P2).
+
 /*
 display_game(GameState)
 move(GameState,Move,NewGameState)
