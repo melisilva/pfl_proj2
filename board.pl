@@ -27,8 +27,8 @@ play(R, C, H, V) :-
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  
     -> (isWhite(Col)
-       -> I is C + V, delete_elem(I, Line1, E, Line2), nth0(I, Line2, 'white', Line1)
-       ; I is C + V, delete_elem(I, Line1, E, Line2), nth0(I, Line2, 'black', Line1)
+       -> I is C + V, delete_elem(I, Line1, 'empty', Line2), nth0(I, Line2, 'white', Line1)
+       ; I is C + V, delete_elem(I, Line1, 'empty', Line2), nth0(I, Line2, 'black', Line1)
        )
     ; error('Não foi escolhida uma posição-alvo vazia.')
     ).
