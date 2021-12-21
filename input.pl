@@ -2,6 +2,8 @@ check_horizontal_and_vertical(H,V):- ((H==2; H== (-2)),(V==1; V== (-1))); ((H==1
 
 isValidCoord(X) :- X =< 8, X >= 0.
 
+isValidNumber(X):- X>= 1, X=<5.
+
 getPlayer1(X) :-
     print('Input the name of the first player: '),
     read(X).
@@ -26,3 +28,8 @@ askForInput(R, C, V, H) :-
     print('Please input a value to add to column (vertical): '),
     read(V),
     (\+check_horizontal_and_vertical(H,V)->askforH_and_V(H1,V1)); print('Well Done :)').
+
+read_number(Number):-
+  write('Choose an Option:'),
+  read(Number).
+  
