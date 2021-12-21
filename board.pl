@@ -7,18 +7,6 @@ isBlack(X) :- X == 1.
 isWhite(X) :- X == -1.
 isEqual(X, Y) :- X == Y.
 
-initialBoard([
-    [1,1,1,1,1,1,1,1,1],
-    [1,1,1,1,1,1,1,1,1],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1]
-]).
-
 validPos('').
 %isValidPos(Row, Collum, Vertical, Horizontal, Board)
 %Checks if R and C give a valid position and if R + V and C + H do as well.
@@ -29,12 +17,10 @@ isValidPos(R, C, V, H, X) :-
     nth0(R, X, Line),
     nth0(C, Line, Col),
     (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
-        -> validPos('')
-        ; error('The computed position is not within the board.')
-       )
-    ; error('You either gave an empty position or a position that is not within the board!')
+    -> validPos('')
+    ; error('The computed position is not within the board.')
     ).
-
+    
 play(R, C, V, H, X, X1) :-
     (isValidPos(R, C, V, H, X) %We must check that the positions are correct.
     -> printBoard(X),

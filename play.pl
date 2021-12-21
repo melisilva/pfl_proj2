@@ -1,6 +1,17 @@
 :-include('./input.pl').
 :-include('./board.pl').
 
+initialBoard([
+    [1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1]
+]).
 
 changePlayer(P, P1, P1, P2).
 changePlayer(P, P2, P1, P2).
@@ -19,7 +30,7 @@ loop(I, X, CP, P1, P2) :-
     ; changePlayer(P, NP, P1, P2), loop(0, X1, NP, P1, P2)
     ).
 
-start() :-
+start(Y) :-
     initialBoard(X),
     getPlayer1(P1),
     getPlayer2(P2),
