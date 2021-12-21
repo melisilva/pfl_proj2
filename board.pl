@@ -1,24 +1,26 @@
 :- use_module(library(lists)).
 :- consult('./utils.pl').
+:- consult('./print.pl').
 
-isEmpty(X) :- X == 'empty'.
-isBlack(X) :- X == 'black'.
-isWhite(X) :- X == 'white'.
+isEmpty(X) :- X == 0.
+isBlack(X) :- X == 1.
+isWhite(X) :- X == -1.
 
 initialBoard([
-    ['black','black','black','black','black','black','black','black','black'],
-    ['black','black','black','black','black','black','black','black','black'],
-    ['empty','empty','empty','empty','empty','empty','empty','empty','empty'],
-    ['empty','empty','empty','empty','empty','empty','empty','empty','empty'],
-    ['empty','empty','empty','empty','empty','empty','empty','empty','empty'],
-    ['empty','empty','empty','empty','empty','empty','empty','empty','empty'],
-    ['empty','empty','empty','empty','empty','empty','empty','empty','empty'],
-    ['white','white','white','white','white','white','white','white','white'],
-    ['white','white','white','white','white','white','white','white','white']
+    [1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0],
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1],
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]).
 
-play(R, C, H, V) :-
+play(R, C, H, V, X1) :-
     initialBoard(X),
+    printBoard(X),
     nth0(R, X, Line),
     nth0(C, Line, Col),
     I1 is R + H,
@@ -27,10 +29,11 @@ play(R, C, H, V) :-
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  
     -> (isWhite(Col)
-       -> I is C + V, delete_elem(I, Line1, E, Line2), nth0(I, Line2, 'white', Line1)
-       ; I is C + V, delete_elem(I, Line1, E, Line2), nth0(I, Line2, 'black', Line1)
+       -> I is C + V, replace(I, Line1, -1, Line2), replace(R, X, Line2, X1)
+       ; I is C + V, replace(I, Line1, 1, Line2), replace(R, X, Line2, X1)
        )
-    ; error('Não foi escolhida uma posição-alvo vazia.')
-    ).
+    ; error('Posicao alvo nao esta vazia.')
+    ),
+    printBoard(X1).
 
 error(X) :- print(X).

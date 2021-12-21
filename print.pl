@@ -17,9 +17,9 @@ Players can only pick spaces that have either the value "black" or "white"
 To check if either player won we need to see if the first two lists are filled with white, if so white player won or
 if the last two lists are filled with black, if so black player won*/
 
-symbol(empty,S):- S='-'.
-symbol(black,S):- S='B'.
-symbol(white,S):- S='W'.
+symbol(0,S):- S='-'.
+symbol(-1,S):- S='B'.
+symbol(1,S):- S='W'.
 
 letter(1, L) :- L='A'.
 letter(2, L) :- L='B'.
