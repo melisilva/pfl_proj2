@@ -36,7 +36,6 @@ isValidPos(R, C, V, H, X) :-
     ).
 
 play(R, C, V, H, X, X1) :-
-    check_horizontal_and_vertical(H,V),
     (isValidPos(R, C, V, H, X) %We must check that the positions are correct.
     -> printBoard(X),
        nth0(R, X, Line), %Get the corresponding line.
