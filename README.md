@@ -13,7 +13,7 @@ O grupo Renpaarden_1 é composto pelos seguintes elementos:
 
 ## Descrição do Jogo
 
-*Reenpaarden*, *cavalos de corrida* em alemão, é jogado num tabuleiro quadrado de dimensões 9x9, por com dois jogadores. Cada jogador começa com 18 pedras (de cores diferentes - um jogador pretas, outro brancas), nas seguintes posições:
+*Renpaarden*, *cavalos de corrida* em alemão, é jogado num tabuleiro quadrado de dimensões 9x9, por com dois jogadores. Cada jogador começa com 18 pedras (de cores diferentes - um jogador pretas, outro brancas), nas seguintes posições:
 
 ![board](imagens/renpaarden_board.png)
 
