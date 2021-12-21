@@ -68,3 +68,15 @@ play(R, C, V, H, X1) :-
     
 
 error(X) :- print(X).
+
+/*
+"O jogo termina quando um dos jogadores consegue que todas as suas pedras atinjam a posição inicial das pedras do seu adversário."
+
+Player white wins if the first two rows (indexes 0 and 1---> A and B) only have white pieces
+Player black wins if the last two rows (indexes 7 and 8--->H and I) only have black pices
+
+We can check this using the function list_member:
+-For the first two rows we check let's say they are in the variable Row, we check: list_member('empty', Row), if we get a yes, it means 
+there's empty spaces there, so the game didn't end, no one is a winner (also idea to check if game ended); we should also check 
+list_member('white',Row), if we get yes, Player black hasn't won. If we get no to both we are golden
+- Same logic for the last two rows but we check list_member('black',Row).*/

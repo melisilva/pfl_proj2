@@ -17,3 +17,5 @@ replace(I, L, E, K) :-
   nth0(I, L, _, R),
   nth0(I, K, E, R).
 
+list_member(E,[E|_]).
+list_member(E,[H|T]):- list_member(E,T).
