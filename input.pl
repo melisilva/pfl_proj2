@@ -30,6 +30,6 @@ askForInput(R, C, V, H) :-
     (\+check_horizontal_and_vertical(H,V)->askforH_and_V(H1,V1)); print('Well Done :)').
 
 read_number(Number):-
-  write('Choose an Option:'),
-  read(Number).
-  
+  write('Choose an Option: '),
+  read(Number),
+  (isValidNumber(Number)->menu_option(Number));read_number(N1).

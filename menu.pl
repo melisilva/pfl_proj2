@@ -27,8 +27,7 @@ menu :-
   menu_option_format(4, 'Intructions'),
   menu_option_format(5, 'Exit'),
   write('\n\n'),
-  read_number(Number),
-  menu_option(Number).
+  read_number(Number).
 
 menu_option(4):-
   %clear,
