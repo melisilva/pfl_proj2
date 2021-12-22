@@ -1,7 +1,6 @@
 check_horizontal_and_vertical(H,V):-
-    (\+ (V == 0 , H == 0)),
-    ((H == 2 ; H == 0 ; H == (-2)),(V == 1 ; V == (-1) ; V == 0));
-    ((H == 1 ; H == 0 ; H == (-1)),(V == 2 ; V == (-2) ; V == 0)).
+    ((H==2; H== (-2)),(V==1; V== (-1)));
+    ((H==1; H== (-1)),(V==2; V== (-2))).
 
 isValidCoord(X) :- X =< 8, X >= 0.
 
@@ -22,6 +21,7 @@ askforH_and_V(H,V):- print('Please input a value to add to row (horizontal): '),
                      print('Please input a value to add to column (vertical): '),
                      read(V),
                      (\+check_horizontal_and_vertical(H,V)->askforH_and_V(H1,V1)).
+
 
 askForInput(R, C, V, H) :-
     print('Please input a Row (horizontal): '),
