@@ -1,6 +1,11 @@
-check_horizontal_and_vertical(H,V):- ((H==2; H== (-2)),(V==1; V== (-1))); ((H==1; H== (-1)),(V==2; V== (-2))).
+check_horizontal_and_vertical(H,V):-
+    (\+ (V == 0 , H == 0)),
+    ((H == 2 ; H == 0 ; H == (-2)),(V == 1 ; V == (-1) ; V == 0));
+    ((H == 1 ; H == 0 ; H == (-1)),(V == 2 ; V == (-2) ; V == 0)).
 
 isValidCoord(X) :- X =< 8, X >= 0.
+
+ln :- print('\n').
 
 isValidNumber(X):- X>= 1, X=<5.
 
