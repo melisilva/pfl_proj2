@@ -12,7 +12,14 @@ validPos('').
 %Checks if R and C give a valid position and if R + V and C + H do as well.
 %If not, its not possible to play.
 isValidPos(R, C, V, H, X) :-
+    print('R: '), print(R), ln,
+    print('C: '), print(C), ln,
+    print('V: '), print(V), ln,
+    print('H: '), print(H), ln,
+    print('X: '), print(X), ln,
+    print('I am here'), ln,
     H1 is C + H,
+    print('I am here 2'), ln,
     V1 is R + V,
     nth0(R, X, Line),
     nth0(C, Line, Col),

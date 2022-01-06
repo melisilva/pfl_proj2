@@ -1,4 +1,6 @@
 check_horizontal_and_vertical(H,V):-
+    print('H: '), print(H), ln,
+    print('V: '), print(V), ln,
     ((H==2; H== (-2)),(V==1; V== (-1)));
     ((H==1; H== (-1)),(V==2; V== (-2))).
 
@@ -32,7 +34,7 @@ askForInput(R, C, V, H) :-
     read(H),
     print('Please input a value to add to column (vertical): '),
     read(V),
-    (\+check_horizontal_and_vertical(H,V)->askforH_and_V(H1,V1)); print('Well Done :)').
+    (\+check_horizontal_and_vertical(H,V)->askforH_and_V(H1,V1)); print('Well Done :)'), ln.
 
 read_number(Number):-
   write('Choose an Option: '),

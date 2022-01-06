@@ -25,7 +25,11 @@ changePlayer(P, NP, P1, P2) :-
 loop(-1, _).
 loop(I, X, CP, P1, P2) :-
     askForInput(R, C, V, H),
-    print(R), ln,
+    print('R: '), print(R), ln,
+    print('C: '), print(C), ln,
+    print('V: '), print(V), ln,
+    print('H: '), print(H), ln,
+    print('X: '), print(X), ln,
     play(R, C, V, H, X, X1),
     (check_WhitePlayer_won(P1) ; check_BlackPlayer_Won(P2)
     -> loop(-1, X1, P1, P2)
