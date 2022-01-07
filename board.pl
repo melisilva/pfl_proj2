@@ -6,12 +6,14 @@ isEmpty(X) :- X == 0.
 isBlack(X) :- X == -1.
 isWhite(X) :- X == 1.
 isEqual(X, Y) :- X == Y.
+isPlayer1(CP):- CP=='P1'.
+isPlayer2(CP):- CP=='P2'.
 
 validPos('').
 %isValidPos(Row, Collum, Vertical, Horizontal, Board)
 %Checks if R and C give a valid position and if R + V and C + H do as well.
 %If not, its not possible to play.
-isValidPos(R, C, V, H, X) :-
+isValidPos(R, C, V, H, X,CP) :-
     print('R: '), print(R), ln,
     print('C: '), print(C), ln,
     print('V: '), print(V), ln,
@@ -23,14 +25,15 @@ isValidPos(R, C, V, H, X) :-
     V1 is R + V,
     nth0(R, X, Line),
     nth0(C, Line, Col),
-    (isWhite(Col)->print('White');error('The computed position is not white')),
+    (isPlayer1(CP)->(isWhite(Col)->print('White');error('The computed position is not white'), !);print('Its not player 1')),
+    (isPlayer2(CP)->(isBlack(Col)->print('Black');error('The computed position is not black'), !);print('Its not player 2')),
     (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
     -> validPos('')
     ; error('The computed position is not within the board.')
     ).
     
-play(R, C, V, H, X, X1) :-
-    (isValidPos(R, C, V, H, X) %We must check that the positions are correct.
+play(R, C, V, H, X, X1,CP) :-
+    (isValidPos(R, C, V, H, X,CP) %We must check that the positions are correct.
     -> printBoard(X),
        nth0(R, X, Line), %Get the corresponding line.
        nth0(C, Line, Col), %Get the corresponding collumn.
