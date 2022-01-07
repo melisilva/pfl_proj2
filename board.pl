@@ -3,8 +3,8 @@
 :- consult('./print.pl').
 
 isEmpty(X) :- X == 0.
-isBlack(X) :- X == 1.
-isWhite(X) :- X == -1.
+isBlack(X) :- X == -1.
+isWhite(X) :- X == 1.
 isEqual(X, Y) :- X == Y.
 
 validPos('').
@@ -23,6 +23,7 @@ isValidPos(R, C, V, H, X) :-
     V1 is R + V,
     nth0(R, X, Line),
     nth0(C, Line, Col),
+    (isWhite(Col)->print('White');error('The computed position is not white')),
     (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
     -> validPos('')
     ; error('The computed position is not within the board.')
@@ -40,13 +41,13 @@ play(R, C, V, H, X, X1) :-
        (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
         -> (isWhite(Col)
             -> I is C + H, 
-                replace(I, Line1, -1, Line2), %First, we replace the thing with the new value (-1 or 1).
+                replace(I, Line1, 1, Line2), %First, we replace the thing with the new value (-1 or 1).
                 replace(I1, X, Line2, X2), %And replace the board with the new line.
                 replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
                 replace(R, X2, Line3, X1), %And replace the board with the new line.
                 printBoard(X1)
             ;  I is C + H,
-               replace(I, Line1, 1, Line2),
+               replace(I, Line1, -1, Line2),
                replace(I1, X, Line2, X2),
                replace(C, Line, 0, Line3),
                replace(R, X2, Line3, X1),
