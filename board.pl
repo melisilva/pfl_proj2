@@ -32,17 +32,17 @@ isValidPos(R, C, V, H, X, CP) :-
           -> print('It is not P2´s turn.'), nl
           ; !
         )
-    ;  (isBlack(Col)
+    );  (isBlack(Col)
        -> print('Black'), nl
        ; (isWhite(Col)
          -> print('It is not P1´s turn.'), nl
          ; !
        )
-    ),
+    )),
     (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
     -> validPos('')
     ; error('The computed position is not within the board.')
-    ))).
+    ).
     
 play(R, C, V, H, X, X1, CP) :-
     (isValidPos(R, C, V, H, X, CP) %We must check that the positions are correct.
@@ -62,7 +62,7 @@ play(R, C, V, H, X, X1, CP) :-
                 replace(R, X2, Line3, X1), %And replace the board with the new line.
                 printBoard(X1)
             ;  I is C + H,
-               replace(I, Line1, -1, Line2),
+               replace(I, Line1, 1, Line2),
                replace(I1, X, Line2, X2),
                replace(C, Line, 0, Line3),
                replace(R, X2, Line3, X1),
