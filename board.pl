@@ -42,7 +42,7 @@ isValidPos(R, C, V, H, X, CP) :-
     (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
     -> validPos('')
     ; error('The computed position is not within the board.')
-    ).
+    ))).
     
 play(R, C, V, H, X, X1, CP) :-
     (isValidPos(R, C, V, H, X, CP) %We must check that the positions are correct.
