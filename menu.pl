@@ -33,7 +33,7 @@ menu_option(4):-
   %clear,
   menu_header_format('INSTRUCTIONS'),
   write('\n\n'),
-  write('  Renpaarden is played in a 9x9 square board dimensões, by two players.\n'),
+  write('  Renpaarden is played in a 9x9 square board, by two players.\n'),
   write('  Each player starts with 18 stones (different colors - one player has black pieces, the other has white ones).\n'),
   write('  In their turn, a player must move one of their stones. They move like a chess horse,\n'),
   write('that is, they are able to move multiple squares at once: 1 square vertically and 2\n'),
