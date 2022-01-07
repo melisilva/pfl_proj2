@@ -14,67 +14,56 @@ validPos('').
 %Checks if R and C give a valid position and if R + V and C + H do as well.
 %If not, its not possible to play.
 isValidPos(R, C, V, H, X, CP) :-
-    print('R: '), print(R), nl,
-    print('C: '), print(C), nl,
-    print('V: '), print(V), nl,
-    print('H: '), print(H), nl,
-    print('X: '), print(X), nl,
-    print('I am here'), nl,
     H1 is C + H,
-    print('I am here 2'), nl,
     V1 is R + V,
     nth0(R, X, Line),
     nth0(C, Line, Col),
     (isPlayer1(CP)
     -> (isWhite(Col)
-        -> print('White'), nl
-        ; (isBlack(Col)
-          -> print('It is not P2´s turn.'), nl
-          ; !
-        )
-    ;  (isBlack(Col)
-       -> print('Black'), nl
-       ; (isWhite(Col)
-         -> print('It is not P1´s turn.'), nl
-         ; !
+        -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
+            -> validPos('')
+            ; error('The computed position is not within the board.')
+           )
+        ; isWhite(Col), !
        )
+    ; (CP \= 'P1', isBlack(Col)
+      -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
+         -> validPos('')
+         ; error('The computed position is not within the board.')
+         )
+      ; isBlack(Col), !
+      )
     ),
-    (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
-    -> validPos('')
-    ; error('The computed position is not within the board.')
-    ))).
+    !.
     
 play(R, C, V, H, X, X1, CP) :-
-    (isValidPos(R, C, V, H, X, CP) %We must check that the positions are correct.
-    -> printBoard(X),
-       nth0(R, X, Line), %Get the corresponding line.
-       nth0(C, Line, Col), %Get the corresponding collumn.
-       I1 is R + V,
-       nth0(I1, X, Line1),
-       I2 is C + H,
-       nth0(I2, Line1, Col1),
-       (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
-        -> (isWhite(Col)
-            -> I is C + H, 
-                replace(I, Line1, 1, Line2), %First, we replace the thing with the new value (-1 or 1).
-                replace(I1, X, Line2, X2), %And replace the board with the new line.
-                replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
-                replace(R, X2, Line3, X1), %And replace the board with the new line.
-                printBoard(X1)
-            ;  I is C + H,
-               replace(I, Line1, -1, Line2),
-               replace(I1, X, Line2, X2),
-               replace(C, Line, 0, Line3),
-               replace(R, X2, Line3, X1),
-               printBoard(X1)
-            )
-        ; (isEqual(Col1, Col) %If he landed on a place where there is already a piece of the same color...
-            -> error('You cannot jump to a place you yourself are ocupying!') %...then it is not a valid play to make.
-                                                                              %One can only jump should they land on a place with a piece of the opposite color.
-            ; error('Play again.') %...Otherwise, they get to play again! This will be substituted.
-            )
-        )
-    ; error('Not a valid play!') %Its not a valid play, so nothing can be done in this case.
+    printBoard(X),
+    nth0(R, X, Line), %Get the corresponding line.
+    nth0(C, Line, Col), %Get the corresponding collumn.
+    I1 is R + V,
+    nth0(I1, X, Line1),
+    I2 is C + H,
+    nth0(I2, Line1, Col1),
+    (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
+    -> (isWhite(Col)
+       -> I is C + H, 
+          replace(I, Line1, 1, Line2), %First, we replace the thing with the new value (-1 or 1).
+          replace(I1, X, Line2, X2), %And replace the board with the new line.
+          replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
+          replace(R, X2, Line3, X1), %And replace the board with the new line.
+          printBoard(X1)
+       ;  I is C + H,
+          replace(I, Line1, -1, Line2),
+          replace(I1, X, Line2, X2),
+          replace(C, Line, 0, Line3),
+          replace(R, X2, Line3, X1),
+          printBoard(X1)
+       )
+    ; (isEqual(Col1, Col) %If he landed on a place where there is already a piece of the same color...
+      -> error('You cannot jump to a place you yourself are ocupying!') %...then it is not a valid play to make.
+      %One can only jump should they land on a place with a piece of the opposite color.
+      ; error('Play again.') %...Otherwise, they get to play again! This will be substituted.
+      )
     ).
     
 

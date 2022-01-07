@@ -17,19 +17,32 @@ getPlayer1(X) :-
 getPlayer2(X) :-
     print('Input the name of the second player: '),
     read(X).
-        
-askForInput(R, C, V, H) :-
-    print('Please input a Row (horizontal): '),
-    read(R),
-    print('Please input a Column (vertical): '),
-    read(C),
+
+checkR_C(R, C, X) :-
+    R =< 8, R >= 0, C =< 8, C >= 0,
+    nth0(R, X, Line),
+    nth0(C, Line, Col),
+    \+ (isEmpty(Col)).
+
+askForInput(R, C, V, H, X, CP) :-
     repeat,
-    print('Please input a value to add to row (horizontal): '),
-    read(H),
-    print('Please input a value to add to column (vertical): '),
-    read(V),
-    check_horizontal_and_vertical(H,V),
-    !.
+    (
+        (
+            print('Please input a Row (horizontal): '),
+            read(R),
+            print('Please input a Column (vertical): '),
+            read(C),
+            checkR_C(R, C, X)
+        ),
+        (
+            print('Please input a value to add to row (horizontal): '),
+            read(H),
+            print('Please input a value to add to column (vertical): '),
+            read(V),
+            check_horizontal_and_vertical(H,V)
+        ),
+    isValidPos(R, C, V, H, X, CP)
+    ).
 
 read_number(Number):-
   write('Choose an Option: '),
