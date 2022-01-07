@@ -18,8 +18,8 @@ To check if either player won we need to see if the first two lists are filled w
 if the last two lists are filled with black, if so black player won*/
 
 symbol(0,S):- S='-'.
-symbol(-1,S):- S='B'.
-symbol(1,S):- S='W'.
+symbol(1,S):- S='B'.
+symbol(-1,S):- S='W'.
 
 letter(1, L) :- L='A'.
 letter(2, L) :- L='B'.
