@@ -37,7 +37,6 @@ isValidPos(R, C, V, H, X, CP) :-
     !.
     
 play(R, C, V, H, X, X1, CP) :-
-    printBoard(X),
     nth0(R, X, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
     I1 is R + H,
