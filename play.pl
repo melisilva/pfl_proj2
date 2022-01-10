@@ -14,10 +14,10 @@ initialBoard([
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]).
 
-changePlayer(P, 'P1', P1, P2).
-changePlayer(P, 'P2', P1, P2).
-changePlayer(P, CP, P1, P2) :-
-    (isPlayer1(P)
+changePlayer('P1', P1, P2).
+changePlayer('P2', P1, P2).
+changePlayer(CP, P1, P2) :-
+    (isPlayer1(CP)
     -> changePlayer(P, 'P2', P1, P2)
     ; changePlayer(P, 'P1', P1, P2)
     ).
