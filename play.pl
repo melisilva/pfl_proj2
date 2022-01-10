@@ -28,7 +28,7 @@ loop(I, X, CP, P1, P2) :-
     play(R, C, V, H, X, X1,CP),
     (check_WhitePlayer_won(X,'P1') ; check_BlackPlayer_won(X,'P2')
     -> loop(-1, X1, P1, P2)
-    ; changePlayer(P, CP, P1, P2), loop(0, X1, CP, P1, P2)
+    ; changePlayer(CP, P1, P2), loop(0, X1, CP, P1, P2)
     ),loop(I,X,CP,P1,P2).
 
 start :-
