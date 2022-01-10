@@ -40,9 +40,9 @@ play(R, C, V, H, X, X1, CP) :-
     printBoard(X),
     nth0(R, X, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
-    I1 is R + V,
+    I1 is R + H,
     nth0(I1, X, Line1),
-    I2 is C + H,
+    I2 is C + V,
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
     -> (isWhite(Col)
