@@ -23,7 +23,7 @@ changePlayer(P, NP, P1, P2) :-
     ).
 
 loop(-1, _).
-loop(I, X, CP, P1, P2) :-
+loop(I, X, CP, P1, P2, GameState) :-
     askForInput(R, C, V, H, X, 'P1'),
     print('R: '), print(R), nl,
     print('C: '), print(C), nl,
@@ -40,7 +40,8 @@ start :-
     initialBoard(X),
     getPlayer1(P1),
     getPlayer2(P2),
-    loop(0, X, P1, P1, P2).
+    printBoard(X),
+    loop(0, X, P1, P1, P2,'start').
 
 /*
 display_game(GameState)

@@ -82,5 +82,8 @@ list_member(-1,Row), if we get yes, Player black hasnt won. If we get no to both
 - Same logic for the last two rows but we check list_member(1,Row).
 */
 
-check_WhitePlayer_won(Y):-initialBoard(X), nth0(7, X, Row), \+list_member(0,Row), \+list_member(1,Row), nth0(8,X,Row1),  \+list_member(0,Row1), \+list_member(1,Row1).
-check_BlackPlayer_won(Y):-initialBoard(X), nth0(0, X, Row), \+list_member(0,Row), \+list_member(-1,Row), nth0(1,X,Row1),  \+list_member(0,Row1), \+list_member(-1,Row1).
+check_WhitePlayer_won(Y):-initialBoard(X), nth0(7, X, Row), \+list_member(0,Row), \+list_member(1,Row), nth0(8,X,Row1),  \+list_member(0,Row1), \+list_member(1,Row1),
+                          congratulate_winner(Y).
+check_BlackPlayer_won(Y):-initialBoard(X), nth0(0, X, Row), \+list_member(0,Row), \+list_member(-1,Row), nth0(1,X,Row1),  \+list_member(0,Row1), \+list_member(-1,Row1),congratulate_winner(Y).
+
+congratulate_winner(Y):- print('Parabéns por ter ganho o jogo '), print(Y).
