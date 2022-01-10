@@ -1,6 +1,4 @@
 check_horizontal_and_vertical(H,V):-
-    print('H: '), print(H), ln,
-    print('V: '), print(V), ln,
     ((H==2; H== (-2)),(V==1; V== (-1)));
     ((H==1; H== (-1)),(V==2; V== (-2))).
 

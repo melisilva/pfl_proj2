@@ -6,7 +6,7 @@ isEmpty(X) :- X == 0.
 isBlack(X) :- X == -1.
 isWhite(X) :- X == 1.
 isEqual(X, Y) :- X == Y.
-isPlayer1(CP):- print(CP),CP=='P1'.
+isPlayer1(CP):- CP=='P1'.
 isPlayer2(CP):- CP=='P2'.
 
 validPos('').
@@ -40,10 +40,8 @@ play(R, C, V, H, X, X1, CP) :-
     nth0(R, X, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
     I1 is R + H,
-    print(I1),
     nth0(I1, X, Line1),
     I2 is C + V,
-    print(I2),
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
     -> (isWhite(Col)
