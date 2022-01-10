@@ -1,5 +1,6 @@
 :-include('./input.pl').
 :-include('./board.pl').
+:-include('./menu.pl').
 
 
 initialBoard([
@@ -22,8 +23,8 @@ loop(I, X, CP) :-
     print(CP),nl,
     askForInput(R, C, V, H, X, CP),
     play(R, C, V, H, X, X1, CP),
-    (check_WhitePlayer_won(X, 'P1') ; check_BlackPlayer_won(X, 'P2')
-    -> loop(-1, X1)
+    (check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+    -> menu,!
     ; changePlayer(CP, NewCP), loop(0, X1, NewCP)
     ),
     loop(I, X, CP).

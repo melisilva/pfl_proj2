@@ -85,7 +85,7 @@ check_WhitePlayer_won(X,Y):-
                           nth0(7, X, Row), 
                           \+list_member(0,Row),
                            \+list_member(-1,Row),
-                           nth0(8,X,Row1),  
+                           nth0(8,X,Row1), 
                            \+list_member(0,Row1), 
                            \+list_member(-1,Row1),
                           congratulate_winner(Y).
@@ -99,4 +99,4 @@ check_BlackPlayer_won(X,Y):-
                           \+list_member(1,Row1),
                           congratulate_winner(Y).
 
-congratulate_winner(Y):- print('Congrats on winning the game, player'), print(Y).
+congratulate_winner(Y):- print('Congrats on winning the game, player'), print(Y),nl.
