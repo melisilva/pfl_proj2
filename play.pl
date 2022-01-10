@@ -14,8 +14,8 @@ initialBoard([
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]).
 
-next_player('P1', 'P2').
-next_player('P2', 'P1').
+changePlayer('P1', 'P2').
+changePlayer('P2', 'P1').
 
 loop(-1, _).
 loop(I, X, CP) :-
