@@ -14,18 +14,19 @@ initialBoard([
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]).
 
-next_player('P1','P2').
-next_player('P2','P1').
+changePlayer('P1', 'P2').
+changePlayer('P2', 'P1').
 
 loop(-1, _).
 loop(I, X, CP) :-
     print(CP),nl,
     askForInput(R, C, V, H, X, CP),
-    play(R, C, V, H, X, X1,CP),
-    (check_WhitePlayer_won(X,'P1') ; check_BlackPlayer_won(X,'P2')
+    play(R, C, V, H, X, X1, CP),
+    (check_WhitePlayer_won(X, 'P1') ; check_BlackPlayer_won(X, 'P2')
     -> loop(-1, X1)
-    ; next_player(CP,NP), loop(0, X1, NP)
-    ),loop(I,X,NP).
+    ; next_player(CP, NewCP), loop(0, X1, NewCP)
+    ),
+    loop(I, X, CP).
 
 start :-
     initialBoard(X),
