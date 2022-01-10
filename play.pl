@@ -31,7 +31,7 @@ loop(I, X, CP, P1, P2) :-
     print('H: '), print(H), nl,
     print('X: '), print(X), nl,
     play(R, C, V, H, X, X1,CP),
-    (check_WhitePlayer_won('P1') ; check_BlackPlayer_Won('P2')
+    (check_WhitePlayer_won(X,'P1') ; check_BlackPlayer_Won(X,'P2')
     -> loop(-1, X1, P1, P2)
     ; changePlayer(P, CP, P1, P2), loop(0, X1, CP, P1, P2)
     ),loop(I,X,CP,P1,P2).
