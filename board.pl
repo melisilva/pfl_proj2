@@ -6,8 +6,8 @@ isEmpty(X) :- X == 0.
 isBlack(X) :- X == -1.
 isWhite(X) :- X == 1.
 isEqual(X, Y) :- X == Y.
-isPlayer1(CP):- CP==P1.
-isPlayer2(CP):- CP==P2.
+isPlayer1(CP):- print(CP),CP=='P1'.
+isPlayer2(CP):- CP=='P2'.
 
 validPos('').
 %isValidPos(Row, Collum, Vertical, Horizontal, Board)

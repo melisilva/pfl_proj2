@@ -14,12 +14,12 @@ initialBoard([
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]).
 
-changePlayer(P, P1, P1, P2).
-changePlayer(P, P2, P1, P2).
+changePlayer(P, 'P1', P1, P2).
+changePlayer(P, 'P2', P1, P2).
 changePlayer(P, CP, P1, P2) :-
-    (P = P1
-    -> changePlayer(P, P2, P1, P2)
-    ; changePlayer(P, P1, P1, P2)
+    (P == 'P1'
+    -> changePlayer(P, 'P2', P1, P2)
+    ; changePlayer(P, 'P1', P1, P2)
     ).
 
 loop(-1, _).
@@ -41,7 +41,7 @@ start :-
     getPlayer1(P1),
     getPlayer2(P2),
     printBoard(X),
-    loop(0, X, P1, P1, P2).
+    loop(0, X, 'P1', P1, P2).
 
 /*
 display_game(GameState)
