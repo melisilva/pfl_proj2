@@ -17,7 +17,7 @@ initialBoard([
 changePlayer(P, 'P1', P1, P2).
 changePlayer(P, 'P2', P1, P2).
 changePlayer(P, CP, P1, P2) :-
-    (P == 'P1'
+    (isPlayer1(P)
     -> changePlayer(P, 'P2', P1, P2)
     ; changePlayer(P, 'P1', P1, P2)
     ).
