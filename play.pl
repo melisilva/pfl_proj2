@@ -34,7 +34,7 @@ loop(I, X, CP, P1, P2, GameState) :-
     (check_WhitePlayer_won(P1) ; check_BlackPlayer_Won(P2)
     -> loop(-1, X1, P1, P2)
     ; changePlayer(P, NP, P1, P2), loop(0, X1, NP, P1, P2)
-    ).
+    ),loop(I,X,CP,P1,P2,GameState).
 
 start :-
     initialBoard(X),
