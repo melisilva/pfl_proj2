@@ -40,18 +40,20 @@ play(R, C, V, H, X, X1, CP) :-
     nth0(R, X, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
     I1 is R + H,
+    print(I1),
     nth0(I1, X, Line1),
     I2 is C + V,
+    print(I2),
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
     -> (isWhite(Col)
-       -> I is C + H, 
+       -> I is C + V, 
           replace(I, Line1, 1, Line2), %First, we replace the thing with the new value (-1 or 1).
           replace(I1, X, Line2, X2), %And replace the board with the new line.
           replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
           replace(R, X2, Line3, X1), %And replace the board with the new line.
           printBoard(X1)
-       ;  I is C + H,
+       ;  I is C + V,
           replace(I, Line1, 1, Line2),
           replace(I1, X, Line2, X2),
           replace(C, Line, 0, Line3),
