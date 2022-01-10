@@ -99,4 +99,4 @@ check_BlackPlayer_won(X,Y):-
                           \+list_member(1,Row1),
                           congratulate_winner(Y).
 
-congratulate_winner(Y):- print('Congrats on winning the game, player'), print(Y),nl.
+congratulate_winner(Y):- print('Congrats on winning the game, player '), print(Y),nl.

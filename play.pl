@@ -22,12 +22,11 @@ loop(-1, _).
 loop(I, X, CP) :-
     print(CP),nl,
     askForInput(R, C, V, H, X, CP),
-    play(R, C, V, H, X, X1, CP),
-    (check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
-    -> menu,!
-    ; changePlayer(CP, NewCP), loop(0, X1, NewCP)
-    ),
-    loop(I, X, CP).
+    (play(R, C, V, H, X, X1, CP)
+    ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+      ->menu
+      ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
+      ;loop(I,X,CP)).
 
 start :-
     initialBoard(X),
