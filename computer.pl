@@ -22,7 +22,7 @@ valid_plays(X, CP, Plays) :-
 valid_plays(_, _, [], Plays, Plays).
 
 valid_plays(X, CP, [R_C | Rest], Acc, Plays) :-
-    valid_plays_row_col(X, CP, R_C, BoardPlays),
+    valid_plays_pos(X, CP, R_C, BoardPlays),
     addPlaysToList(Acc, R_C, BoardPlays, NewAcc),
     valid_plays(X, CP, Rest, NewAcc, Plays).
 
@@ -38,10 +38,10 @@ get_player_row_col(X, CP, [R, C], Acc, R_C) :-
     get_player_row_col(X, CP, [NewR, NewC], Acc, R_C).
 
 get_player_row_col(X, CP, [R, C], Acc, R_C) :-
-    get_pos(X, [R, C], Pos), !,
+    get_val(X, [R, C], Value), !,
     (
-        Pos \= 0,
-        get_player(Pos, CP),
+        Value \= 0,
+        get_player(Value, CP),
         append(Acc, [[R, C]], NewAcc)
         ;
         NewAcc = Acc
@@ -49,9 +49,9 @@ get_player_row_col(X, CP, [R, C], Acc, R_C) :-
     NewC is C + 1,
     get_player_row_col(X, CP, [R, NewC], NewAcc, R_C).
 
-get_pos(X, [NewR, NewC], Pos) :-
-    get_row(X, NewR, R),
-    get_value(R, NCol, Pos), !.
+get_val(X, [NewR, NewC], Value) :-
+    nth0(NewR, X, R),
+    nth0(NewC, R, Value), !.
 
 get_player(Pos, 'P1') :-
     Pos == 1.
@@ -59,24 +59,50 @@ get_player(Pos, 'P1') :-
 get_player(Pos, 'P2') :-
     Pos == -1.
 
-valid_plays_position(X, CP, Pos, Plays) :-
-    valid_plays_position(X, CP, Pos, 0, [], Plays).
+valid_plays_pos(X, CP, Pos, Plays) :-
+    valid_plays_pos(X, CP, Pos, 0, [], Plays).
 
-valid_plays_position(_, _, _, Plays, Plays).
+valid_plays_pos(_, _, _, Plays, Plays).
 
-valid_ver_hor(1, 2).
-valid_ver_hor(-1, 2).
-valid_ver_hor(1, -2).
-valid_ver_hor(-1, -2).
-valid_ver_hor(2, 1).
-valid_ver_hor(-2, 1).
-valid_ver_hor(2, -1).
-valid_ver_hor(-2, -1).
+valid_ver_hor(0, 1, 2).
+valid_ver_hor(1, -1, 2).
+valid_ver_hor(2, 1, -2).
+valid_ver_hor(3, -1, -2).
+valid_ver_hor(4, 2, 1).
+valid_ver_hor(5, -2, 1).
+valid_ver_hor(6, 2, -1).
+valid_ver_hor(7, -2, -1).
 
-valid_plays_position(X, CP, Pos, V_H, Acc, Plays) :- 
+valid_plays_pos(X, CP, Pos, Move, Acc, Plays) :- 
+    valid_ver_hor(Move, _, _),
+    NewMove is Move + 1,
+    valid_plays_ver_hor(X, CP, Pos, Move, V_H),
+    length(V_H, N),
+    (
+        N > 0,
+        addMovesToList(Acc, [Move], Moves, NewAcc)
+        ;
+        NewAcc = Acc
+    ),
+    valid_plays_pos(X, CP, Pos, NewMove, NewAcc, Plays).
 
+valid_plays_ver_hor(X, CP, Pos, Move, Plays) :-
+    valid_plays_ver_hor(X, CP, Pos, Move, [], Plays).
 
+valid_plays_ver_hor(_, _, _, _, Plays, Plays).
+
+valid_plays_ver_hor(X, CP, [R, C], Move, Acc, Plays) :-
+    (
+        valid_ver_hor(Move, V, H),
+        isValidPos(R, C, V, H, X, CP), !,
+        append(Acc, [Move], NewAcc)
+        ;
+        NewAcc = Acc        
+    ),
+    !,
+    valid_plays_ver_hor(X, CP, [R, C], Move, NewAcc, Plays).
 
 %Level 2
 %choose_move(X,CP,2,Move):- %select move based on board evaluation
 
+%isValidPos(Row, Collum, Vertical, Horizontal, Board, Player) 
