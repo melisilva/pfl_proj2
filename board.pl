@@ -6,11 +6,11 @@ isEmpty(X) :- X == 0.
 isBlack(X) :- X == -1.
 isWhite(X) :- X == 1.
 isEqual(X, Y) :- X == Y.
-isPlayer1(CP):- CP=='P1'.
-isPlayer2(CP):- CP=='P2'.
+isPlayer1(CP) :- CP=='P1'.
+isPlayer2(CP) :- CP=='P2'.
 
 validPos('').
-%isValidPos(Row, Collum, Vertical, Horizontal, Board)
+%isValidPos(Row, Collum, Vertical, Horizontal, Board, Player)
 %Checks if R and C give a valid position and if R + V and C + H do as well.
 %If not, its not possible to play.
 isValidPos(R, C, V, H, X, CP) :-
