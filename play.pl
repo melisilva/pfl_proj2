@@ -1,6 +1,7 @@
 :-include('./input.pl').
 :-include('./board.pl').
 :-include('./menu.pl').
+:-include('./computer.pl').
 
 
 initialBoard([
@@ -26,12 +27,40 @@ loop(I, X, CP) :-
     ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
       ->menu
       ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
-      ;loop(I,X,CP)).
+    ; loop(I,X,CP)).
+
+unzipPlay([R, C, V, H], R, C, V, H).
+
+loop_PC(-1, _).
+loop_PC(I, X, CP) :-
+    (isPlayer2(CP)
+    -> choose_play(X, CP, 1, Play),
+       unzipPlay(Play, R, C, V, H),
+       (play(R, C, V, H, X, X1, CP)
+       ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+         ->menu
+         ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
+       ; loop(I,X,CP)
+        )
+    ; askForInput(R, C, V, H, X, CP),
+      (play(R, C, V, H, X, X1, CP)
+       ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+         ->menu
+         ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
+       ; loop(I,X,CP)
+      )
+    ).
+    
 
 start :-
     initialBoard(X),
     printBoard(X),
     loop(0, X, 'P1').
+
+start_PC :-
+    initialBoard(X),
+    %printBoard(X),
+    loop_PC(0, X, 'P2').
 
 /*
 display_game(GameState)
