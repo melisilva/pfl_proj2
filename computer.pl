@@ -51,13 +51,18 @@ get_player_row_col(X, CP, [R, C], Acc, R_C) :-
 
 get_val(X, [NewR, NewC], Value) :-
     nth0(NewR, X, R),
-    nth0(NewC, R, Value), !.
 
 get_player(Pos, 'P1') :-
     Pos == 1.
 
 get_player(Pos, 'P2') :-
     Pos == -1.
+
+addMovesToList(FinalList, _, [], FinalList).
+addMovesToList(List, Position, [Move | Rest], FinalList) :-
+    append(Position, Move, NewMove),
+    append(List, [NewMove], NewList),
+    addMovesToList(NewList, Position, Rest, FinalList).
 
 valid_plays_pos(X, CP, Pos, Plays) :-
     valid_plays_pos(X, CP, Pos, 0, [], Plays).
@@ -71,7 +76,6 @@ valid_ver_hor(3, -1, -2).
 valid_ver_hor(4, 2, 1).
 valid_ver_hor(5, -2, 1).
 valid_ver_hor(6, 2, -1).
-valid_ver_hor(7, -2, -1).
 
 valid_plays_pos(X, CP, Pos, Move, Acc, Plays) :- 
     valid_ver_hor(Move, _, _),
