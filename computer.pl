@@ -29,7 +29,7 @@ valid_plays(X, CP, [R_C | Rest], Acc, Plays) :-
 get_player_row_col(X, CP, R_C) :-
     get_player_row_col(X, CP, [0, 0], [], R_C).
 
-get_player_row_col(_, _, [8, _], R_C, R_C).
+get_player_row_col(_, _, [8, 8], R_C, R_C).
 
 get_player_row_col(X, CP, [R, C], Acc, R_C) :-
     C > 8,
