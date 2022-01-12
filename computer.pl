@@ -34,23 +34,29 @@ get_player_row_col(_, _, [8, 8], R_C, R_C).
 get_player_row_col(X, CP, [R, C], Acc, R_C) :-
     C > 8,
     NewR is R + 1,
+    print('NewR '),print(NewR),nl,
     NewC is 0,
     get_player_row_col(X, CP, [NewR, NewC], Acc, R_C).
 
 get_player_row_col(X, CP, [R, C], Acc, R_C) :-
     get_val(X, [R, C], Value), !,
     (
+       /*print('Value '),print(Value),nl,*/
         Value \= 0,
         get_player(Value, CP),
+        print('R '),print(R),nl,print('C '),print(C),nl,
         append(Acc, [[R, C]], NewAcc)
         ;
         NewAcc = Acc
     ),
     NewC is C + 1,
+    print('NewC '),print(NewC),nl,
     get_player_row_col(X, CP, [R, NewC], NewAcc, R_C).
 
 get_val(X, [NewR, NewC], Value) :-
     nth0(NewR, X, R),
+    nth0(NewC, R, Value), 
+    /*print('Value '),print(Value),nl,*/ !.
 
 get_player(Pos, 'P1') :-
     Pos == 1.
@@ -79,8 +85,9 @@ valid_ver_hor(6, 2, -1).
 
 valid_plays_pos(X, CP, Pos, Move, Acc, Plays) :- 
     valid_ver_hor(Move, _, _),
-    NewMove is Move + 1,
     valid_plays_ver_hor(X, CP, Pos, Move, V_H),
+    NewMove is Move + 1,
+    print('NewMove '),print(NewMove),nl,
     length(V_H, N),
     (
         N > 0,
@@ -97,7 +104,12 @@ valid_plays_ver_hor(_, _, _, _, Plays, Plays).
 
 valid_plays_ver_hor(X, CP, [R, C], Move, Acc, Plays) :-
     (
+        print('Move '),print(Move),nl,
         valid_ver_hor(Move, V, H),
+        print('H '),print(H),nl,
+        print('V '),print(V),nl,
+        print('C '),print(C),nl,
+        print('R '),print(R),nl, 
         isValidPos(R, C, V, H, X, CP), !,
         append(Acc, [Move], NewAcc)
         ;

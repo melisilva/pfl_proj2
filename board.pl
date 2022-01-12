@@ -15,9 +15,12 @@ validPos('').
 %If not, its not possible to play.
 isValidPos(R, C, V, H, X, CP) :-
     H1 is R + H,
+    print('H1 '),print(H1),nl,
     V1 is C + V,
+    print('V1 '),print(V1),nl,
     nth0(R, X, Line),
     nth0(C, Line, Col),
+    print('Col '),print(Col),nl,
     (isPlayer1(CP)
     -> (isWhite(Col)
         -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
@@ -29,7 +32,7 @@ isValidPos(R, C, V, H, X, CP) :-
     ; (CP \= 'P1', isBlack(Col)
       -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
          -> validPos('')
-         ; error('The computed position is not within the board.'), nl, fail
+         ; error('The computed position is not within the board.'), nl, pause
          )
       ; isBlack(Col), !
       )
