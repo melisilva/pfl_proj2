@@ -1,3 +1,5 @@
+:- use_module(library(random)).
+
 %Level 1 
 /*
     Já feito:
@@ -11,7 +13,8 @@
 choose_play(X, CP, 1, Play) :-
     valid_plays(X, CP, Plays),
     length(Plays, N),
-    random(1, N, Index),
+    print('N: '), print(N), nl,
+    random_between(1, N, Index),
     nth1(Index, Plays, Play),
     !.
 
@@ -23,7 +26,7 @@ valid_plays(_, _, [], Plays, Plays).
 
 valid_plays(X, CP, [R_C | Rest], Acc, Plays) :-
     valid_plays_pos(X, CP, R_C, BoardPlays),
-    addPlaysToList(Acc, R_C, BoardPlays, NewAcc),
+    addMovesToList(Acc, R_C, BoardPlays, NewAcc),
     valid_plays(X, CP, Rest, NewAcc, Plays).
 
 get_player_row_col(X, CP, R_C) :-
@@ -73,22 +76,23 @@ addMovesToList(List, Position, [Move | Rest], FinalList) :-
 valid_plays_pos(X, CP, Pos, Plays) :-
     valid_plays_pos(X, CP, Pos, 0, [], Plays).
 
-valid_plays_pos(_, _, _, Plays, Plays).
+valid_plays_pos(_, _, _, 8, Plays, Plays).
 
 valid_ver_hor(0, 1, 2).
-valid_ver_hor(1, -1, 2).
+valid_ver_hor(4, -1, 2).
 valid_ver_hor(2, 1, -2).
 valid_ver_hor(3, -1, -2).
-valid_ver_hor(4, 2, 1).
+valid_ver_hor(7, 2, 1).
 valid_ver_hor(5, -2, 1).
 valid_ver_hor(6, 2, -1).
-valid_ver_hor(7, -2, -1).
+valid_ver_hor(1, -2, -1).
 
 valid_plays_pos(X, CP, Pos, Move, Acc, Plays) :- 
     valid_ver_hor(Move, _, _),
-    valid_plays_ver_hor(X, CP, Pos, Move, V_H),
     NewMove is Move + 1,
-    print('NewMove '),print(NewMove),nl,
+    valid_plays_ver_hor(X, CP, Pos, Move, V_H),
+    print('NewMove '), print(NewMove), nl,
+    print("PLAYS: "), print(Plays), nl,
     length(V_H, N),
     (
         N > 0,
@@ -99,25 +103,45 @@ valid_plays_pos(X, CP, Pos, Move, Acc, Plays) :-
     valid_plays_pos(X, CP, Pos, NewMove, NewAcc, Plays).
 
 valid_plays_ver_hor(X, CP, Pos, Move, Plays) :-
+    print('Move valid_plays_ver_hor: '), print(Move), nl,
     valid_plays_ver_hor(X, CP, Pos, Move, [], Plays).
 
 valid_plays_ver_hor(_, _, _, _, Plays, Plays).
 
 valid_plays_ver_hor(X, CP, [R, C], Move, Acc, Plays) :-
+    print("i'm here"), nl,
     (
         print('Move '),print(Move),nl,
         valid_ver_hor(Move, V, H),
         print('H '),print(H),nl,
         print('V '),print(V),nl,
         print('C '),print(C),nl,
-        print('R '),print(R),nl, 
-        isValidPos(R, C, V, H, X, CP), !,
-        append(Acc, [Move], NewAcc)
+        print('R '),print(R),nl,
+        isValidPos_PC(R, C, V, H, X, CP), !,
+        append(Acc, [Move], NewAcc),
+        print('Acc'), print(Acc), nl,
+        print('NewAcc'), print(NewAcc), nl
         ;
         NewAcc = Acc        
     ),
     !,
     valid_plays_ver_hor(X, CP, [R, C], Move, NewAcc, Plays).
+
+isValidPos_PC(R, C, V, H, X, CP) :-
+    H1 is R + H,
+    print('H1 '),print(H1),nl,
+    V1 is C + V,
+    print('V1 '),print(V1),nl,
+    nth0(R, X, Line),
+    nth0(C, Line, Col),
+    print('Col '),print(Col),nl,
+    isPlayer2(CP),
+    isBlack(Col),
+    H1 =< 8, 
+    H1 >= 0,
+    V1 =< 8,
+    V1 >= 0.
+
 
 %Level 2
 %choose_move(X,CP,2,Move):- %select move based on board evaluation

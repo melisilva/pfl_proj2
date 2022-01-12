@@ -32,7 +32,7 @@ isValidPos(R, C, V, H, X, CP) :-
     ; (CP \= 'P1', isBlack(Col)
       -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
          -> validPos('')
-         ; error('The computed position is not within the board.'), nl, pause
+         ; error('The computed position is not within the board.'), nl, fail
          )
       ; isBlack(Col), !
       )
