@@ -82,6 +82,7 @@ valid_ver_hor(3, -1, -2).
 valid_ver_hor(4, 2, 1).
 valid_ver_hor(5, -2, 1).
 valid_ver_hor(6, 2, -1).
+valid_ver_hor(7, -2, -1).
 
 valid_plays_pos(X, CP, Pos, Move, Acc, Plays) :- 
     valid_ver_hor(Move, _, _),
