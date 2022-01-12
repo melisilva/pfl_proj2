@@ -25,8 +25,8 @@ valid_plays(X, CP, Plays) :-
 valid_plays(_, _, [], Plays, Plays).
 
 valid_plays(X, CP, [R_C | Rest], Acc, Plays) :-
-    valid_plays_pos(X, CP, R_C, BoardPlays),
-    addMovesToList(Acc, R_C, BoardPlays, NewAcc),
+    valid_plays_pos(X, CP, R_C, Plays),
+    addMovesToList(Acc, R_C, Plays, NewAcc),
     valid_plays(X, CP, Rest, NewAcc, Plays).
 
 get_player_row_col(X, CP, R_C) :-
@@ -140,7 +140,8 @@ isValidPos_PC(R, C, V, H, X, CP) :-
     H1 =< 8, 
     H1 >= 0,
     V1 =< 8,
-    V1 >= 0.
+    V1 >= 0,
+    !.
 
 
 %Level 2
