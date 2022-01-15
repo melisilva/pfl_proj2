@@ -55,8 +55,7 @@ askForHV(R,C,V,H,X,CP):-
        check_horizontal_and_vertical(H,V)
        ),
      isValidPos(R, C, V, H, X, CP)
-    ),
-    play(R,C,V,H,X,CP).
+    ).
 
 read_number(Number):-
   write('Choose an Option: '),

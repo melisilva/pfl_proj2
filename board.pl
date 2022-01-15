@@ -5,6 +5,7 @@
 isEmpty(X) :- X == 0.
 isBlack(X) :- X == -1.
 isWhite(X) :- X == 1.
+isMixed(X):-  X == -3.
 isEqual(X, Y) :- X == Y.
 isPlayer1(CP) :- CP=='P1'.
 isPlayer2(CP) :- CP=='P2'.
@@ -28,16 +29,32 @@ isValidPos(R, C, V, H, X, CP) :-
             ; error('The computed position is not within the board.'), nl, fail
            )
         ; isWhite(Col), !
-       )
-    ; (CP \= 'P1', isBlack(Col)
-      -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
-         -> validPos('')
-         ; error('The computed position is not within the board.'), nl, fail
-         )
-      ; isBlack(Col), !
-      )
-    ),
-    !.
+    )
+    -> (isMixed(Col)
+        -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
+            -> validPos('')
+            ; error('The computed position is not within the board.'), nl, fail
+           )
+        ; isMixed(Col), !
+    )
+    ;(CP \= 'P1'
+    -> (isBlack(Col)
+        -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
+            -> validPos('')
+            ; error('The computed position is not within the board.'), nl, fail
+           )
+        ; isBlack(Col), !
+    )
+    -> (isMixed(Col)
+        -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
+            -> validPos('')
+            ; error('The computed position is not within the board.'), nl, fail
+           )
+        ; isMixed(Col), !
+    )
+    )
+    ),!.
+
     
 play(R, C, V, H, X, X1, CP) :-
     nth0(R, X, Line), %Get the corresponding line.
@@ -70,7 +87,8 @@ play(R, C, V, H, X, X1, CP) :-
         replace(C, Line, 0, Line3),
         replace(R, X2, Line3, X1),
         printBoard(X1),
-        askForHV(I1,I2,V1,H1,X,CP)
+        askForHV(I1,I2,V1,H1,X,CP),
+        play(R,C,V,H,X,CP)
       )
     ).
     
