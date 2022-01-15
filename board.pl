@@ -5,6 +5,8 @@
 isEmpty(X) :- X == 0.
 isBlack(X) :- X==(-1); X== (-3).
 isWhite(X) :- X==1; X== (-3).
+isOnlyWhite(X):-X==1.
+isOnlyBlack(X):-X== -1.
 isMixed(X):-  X == -3.
 isEqual(X, Y) :- X == Y.
 isPlayer1(CP) :- CP=='P1'.
@@ -49,20 +51,34 @@ play(R, C, V, H, X, X1, CP) :-
     I2 is C + V,
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
-    -> (isWhite(Col)
+    -> (isOnlyWhite(Col)
        -> I is C + V, 
           replace(I, Line1, 1, Line2), %First, we replace the thing with the new value (-1 or 1).
           replace(I1, X, Line2, X2), %And replace the board with the new line.
           replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
           replace(R, X2, Line3, X1), %And replace the board with the new line.
           printBoard(X1)
-       ;  I is C + V,
+       ; (isOnlyBlack(Col)
+         ->I is C + V,
           replace(I, Line1, -1, Line2),
           replace(I1, X, Line2, X2),
           replace(C, Line, 0, Line3),
           replace(R, X2, Line3, X1),
           printBoard(X1)
-       )
+       ; (isPlayer1(CP)
+          ->I is C + V,
+          replace(I, Line1, 1, Line2),
+          replace(I1, X, Line2, X2),
+          replace(C, Line, -1, Line3),
+          replace(R, X2, Line3, X1),
+          printBoard(X1)
+      ;   I is C + V,
+          replace(I, Line1, -1, Line2),
+          replace(I1, X, Line2, X2),
+          replace(C, Line, 1, Line3),
+          replace(R, X2, Line3, X1),
+          printBoard(X1)
+       )))
     ; (isEqual(Col1, Col) %If he landed on a place where there is already a piece of the same color...
       -> error('You cannot jump to a place you yourself are ocupying!'), nl, fail %...then it is not a valid play to make.
       %One can only jump should they land on a place with a piece of the opposite color.
