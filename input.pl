@@ -1,4 +1,5 @@
 check_horizontal_and_vertical(H,V):-
+    print(H),nl,print(V),nl,
     ((H==2; H== (-2)),(V==1; V== (-1)));
     ((H==1; H== (-1)),(V==2; V== (-2))).
 
@@ -48,12 +49,14 @@ askForHV(R,C,V,H,X,CP):-
        (
        print('Please input a value to add to row (horizontal): '),
        read(H),
+       print('help'),
        print('Please input a value to add to column (vertical): '),
        read(V),
        check_horizontal_and_vertical(H,V)
        ),
      isValidPos(R, C, V, H, X, CP)
-    ).
+    ),
+    play(R,C,V,H,X,CP).
 
 read_number(Number):-
   write('Choose an Option: '),

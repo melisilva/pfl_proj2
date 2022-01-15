@@ -70,8 +70,7 @@ play(R, C, V, H, X, X1, CP) :-
         replace(C, Line, 0, Line3),
         replace(R, X2, Line3, X1),
         printBoard(X1),
-        askForHV(I1,I2,V,H,X,CP),
-        play(I1,I2,V,H,X,CP)
+        askForHV(I1,I2,V1,H1,X,CP)
       )
     ).
     
