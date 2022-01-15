@@ -20,6 +20,7 @@ if the last two lists are filled with black, if so black player won*/
 symbol(0,S):- S='-'.
 symbol(-1,S):- S='B'.
 symbol(1,S):- S='W'.
+symbol(-3,S):-S='M'.
 
 letter(1, L) :- L='A'.
 letter(2, L) :- L='B'.

@@ -42,6 +42,19 @@ askForInput(R, C, V, H, X, CP) :-
     isValidPos(R, C, V, H, X, CP)
     ).
 
+askForHV(R,C,V,H,X,CP):-
+   repeat,
+   (
+       (
+       print('Please input a value to add to row (horizontal): '),
+       read(H),
+       print('Please input a value to add to column (vertical): '),
+       read(V),
+       check_horizontal_and_vertical(H,V)
+       ),
+     isValidPos(R, C, V, H, X, CP)
+    ).
+
 read_number(Number):-
   write('Choose an Option: '),
   read(Number),

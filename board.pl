@@ -64,7 +64,14 @@ play(R, C, V, H, X, X1, CP) :-
     ; (isEqual(Col1, Col) %If he landed on a place where there is already a piece of the same color...
       -> error('You cannot jump to a place you yourself are ocupying!'), nl, fail %...then it is not a valid play to make.
       %One can only jump should they land on a place with a piece of the opposite color.
-      ; error('Play again.'), nl, fail %...Otherwise, they get to play again! This will be substituted.
+      ; I is C + V,
+        replace(I, Line1, -3, Line2),
+        replace(I1, X, Line2, X2),
+        replace(C, Line, 0, Line3),
+        replace(R, X2, Line3, X1),
+        printBoard(X1),
+        askForHV(I1,I2,V,H,X,CP),
+        play(I1,I2,V,H,X,CP)
       )
     ).
     
