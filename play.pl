@@ -34,7 +34,7 @@ unzipPlay([R, C, V, H], R, C, V, H).
 loop_PC(-1, _).
 loop_PC(I, X, CP) :-
     (isPlayer2(CP)
-    -> choose_play(X, CP, 1, Play),
+    -> choose_play(X, CP, Play, Level),
        unzipPlay(Play, R, C, V, H),
        (play(R, C, V, H, X, X1, CP)
        ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
