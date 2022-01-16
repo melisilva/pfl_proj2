@@ -43,7 +43,7 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
     !.
 
 
-move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP]) :-
+move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
     I1 is R + H,
@@ -93,7 +93,9 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP]) :-
         replace(R, BoardState2, Line3, NewBoardState),
         changePlayer(CP, NewCP),
         display_game([NewBoardState, CP]),
-        askForHV(I1, I2, V1, H1, [NewBoardState, NewCP])
+        (Type == 'Human'
+        ->askForHV(I1, I2, V1, H1, [NewBoardState, NewCP])
+        ; valid_move_pos([NewBoardState, NewCP],I1,I2,Moves))
       )
     ).
     

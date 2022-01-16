@@ -45,7 +45,7 @@ askForHV(R, C, V, H, [BoardState, CP]):-
        ),
      isValidPos([R, C, V, H], [BoardState, CP])
     ),
-    move([R,C,V,H], [BoardState, CP], [NewBoardState, CP]).
+    move([R,C,V,H], [BoardState, CP], [NewBoardState, CP],'Human').
 
 read_number(Number):-
   write('Choose an Option: '),
