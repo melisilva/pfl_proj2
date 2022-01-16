@@ -32,11 +32,11 @@ letter(7, L) :- L='G'.
 letter(8, L) :- L='H'.
 letter(9, L) :- L='I'.
 
-printBoard(X) :-
+display_game([BoardState, CP]) :-
     nl,
     write('   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n'),
     write('---|---|---|---|---|---|---|---|---|---|\n'),
-    printMatrix(X, 1).
+    printMatrix(BoardState, 1).
 
 printMatrix([], 10).
 

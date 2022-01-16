@@ -10,15 +10,19 @@
     -> get_player
 */
 
-choose_play(X, CP, Play, Level) :-
-    valid_plays(X, CP, Plays),
-    print('plays'), nl, print(Plays).
+choose_move(GameState, CP, Play, Level) :-
+    valid_moves(GameState, CP, Moves),
+    length(Moves, N),
+    print('Plays: '), print(Moves), nl,
+    print('Length Plays: '), print(N), nl,
+    random(1, N, Index),
+    nth1(Index, Moves, Play).
 
 unzipPos(R-C, R, C).
 
-valid_plays(X, CP, Plays) :-
-    valid_pos(X, Positions),
-    valid_plays_aux(X, Positions, Plays).
+valid_moves(GameState, CP, Plays) :-
+    valid_pos(GameState, CP, Positions),
+    valid_moves_aux(GameState, Positions, CP, Plays).
 
 valid_V_H(1, 2).
 valid_V_H(-1, 2).
@@ -29,38 +33,46 @@ valid_V_H(-2, 1).
 valid_V_H(2, -1).
 valid_V_H(-2, -1).
 
-valid_plays_aux(X, [], Plays) :- !.
-valid_plays_aux(X, [Head|Tail], Plays) :-
+valid_moves_aux(GameState, [], CP, Plays) :- !.
+valid_moves_aux(GameState, [Head|Tail], CP, Plays) :-
     unzipPos(Head, R, C),
     findall([R, C, V, H],
     (
         valid_V_H(V, H),
-        V < 0,
-        H1 is R + H,
-        V1 is C + V,
-        nth0(R, X, Line),
-        nth0(C, Line, Col),
-        isBlack(Col),
+        H < 0, %Só pode andar para cima.
+        H1 is R + (H),
+        V1 is C + (V),
         H1 =< 8,
         H1 >= 0,
         V1 =< 8,
-        print('V1'), nl, print(V1), nl,
-        V1 >= 0
+        V1 >= 0,
+        nth0(R, GameState, Line),
+        nth0(C, Line, Col), 
+        (isPlayer2(CP)
+        -> isBlack(Col)
+        ; isWhite(Col)), %Se passar isto, então é porque escolheu uma peça da cor correta.
+        nth0(H1, GameState, DestinationLine),
+        nth0(V1, DestinationLine, DestinationCol),
+        (isPlayer2(CP)
+        -> (isEmpty(DestinationCol) ; \+(isBlack(DestinationCol)))
+        ; (isEmpty(DestinationCol) ; \+(isWhite(DestinationCol))))
     ), 
     IntermediatePlays),
-    valid_plays_aux(X, Tail, MoreIntermediatePlays),
+    valid_plays_aux(GameState, Tail, MoreIntermediatePlays),
     append(IntermediatePlays, MoreIntermediatePlays, Plays).
 
-valid_pos(X, Positions) :-
+valid_pos(GameState, CP, Positions) :-
     findall(R-C,
     (
-        nth0(R, X, Line),
+        nth0(R, GameState, Line),
         nth0(C, Line, Col),
-        isBlack(Col)
+        (isPlayer2(CP)
+        -> isBlack(Col)
+        ; isWhite(Col))
     ),
     Positions).
 
 %Level 2
-%choose_move(X,CP,2,Move):- %select move based on board evaluation
+%choose_move(GameState, CP, 2, Move):- %select move based on board evaluation
 
 %isValidPos(Row, Collum, Vertical, Horizontal, Board, Player) 

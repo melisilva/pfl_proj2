@@ -3,27 +3,17 @@ check_horizontal_and_vertical(H,V):-
     ((H==2; H== (-2)),(V==1; V== (-1)));
     ((H==1; H== (-1)),(V==2; V== (-2))).
 
-isValidCoord(X) :- X =< 8, X >= 0.
-
 ln :- print('\n').
 
-isValidNumber(X):- X>= 1, X=<5.
+isValidNumber(Number) :- Number >= 1, Number =<5.
 
-getPlayer1(X) :-
-    print('Input the name of the first player: '),
-    read(X).
-
-getPlayer2(X) :-
-    print('Input the name of the second player: '),
-    read(X).
-
-checkR_C(R, C, X) :-
+checkR_C(R, C, [BoardState, CP]) :-
     R =< 8, R >= 0, C =< 8, C >= 0,
-    nth0(R, X, Line),
+    nth0(R, BoardState, Line),
     nth0(C, Line, Col),
     \+ (isEmpty(Col)).
 
-askForInput(R, C, V, H, X, CP) :-
+askForInput(R, C, V, H, GameState) :-
     repeat,
     (
         (
@@ -31,7 +21,7 @@ askForInput(R, C, V, H, X, CP) :-
             read(R),
             print('Please input a Column (vertical): '),
             read(C),
-            checkR_C(R, C, X)
+            checkR_C(R, C, GameState)
         ),
         (
             print('Please input a value to add to row (horizontal): '),
@@ -40,10 +30,10 @@ askForInput(R, C, V, H, X, CP) :-
             read(V),
             check_horizontal_and_vertical(H,V)
         ),
-    isValidPos(R, C, V, H, X, CP)
+    isValidPos(R, C, V, H, GameState)
     ).
 
-askForHV(R,C,V,H,X,CP):-
+askForHV(R, C, V, H, [BoardState, CP]):-
    repeat,
    (
        (
@@ -54,11 +44,11 @@ askForHV(R,C,V,H,X,CP):-
        read(V),
        check_horizontal_and_vertical(H,V)
        ),
-     isValidPos(R, C, V, H, X, CP)
+     isValidPos([R, C, V, H], [BoardState, CP])
     ),
-    play(R,C,V,H,X,X1,CP).
+    move([R,C,V,H], [BoardState, CP], [NewBoardState, CP]).
 
 read_number(Number):-
   write('Choose an Option: '),
   read(Number),
-  (isValidNumber(Number)->menu_option(Number));read_number(N1).
+  (isValidNumber(Number)->menu_option(Number)) ; read_number(N1).

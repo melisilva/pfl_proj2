@@ -23,13 +23,14 @@ menu :-
   write('\n\n'),
   menu_option_format(1, 'Human vs Human'),
   menu_option_format(2, 'Human vs Computer'),
-  menu_option_format(3, 'Computer vs Computer'),
-  menu_option_format(4, 'Intructions'),
-  menu_option_format(5, 'Exit'),
+  menu_option_format(3, 'Computer vs Human'),
+  menu_option_format(4, 'Computer vs Computer'),
+  menu_option_format(5, 'Intructions'),
+  menu_option_format(6, 'Exit'),
   write('\n\n'),
   read_number(Number).
 
-menu_option(4):-
+menu_option(5):-
   %clear,
   menu_header_format('INSTRUCTIONS'),
   write('\n\n'),
@@ -43,6 +44,6 @@ menu_option(4):-
   write('  The game ends when one of the players stones occupies the original positions of their opponents stones.\n\n'),
   menu.
 
-menu_option(5):-
+menu_option(6):-
   write('Thank You For Playing\n\n'),
   renpaarden_logo.
