@@ -47,13 +47,17 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
         H1 >= 0,
         V1 =< 8,
         V1 >= 0,
-        print('H1: '), print(H1), nl,
-        print('V1: '), print(V1), nl,
         nth0(R, BoardState, Line),
-        nth0(C, Line, Col), 
+        nth0(C, Line, Col),
+        (isPlayer2(CP)
+        -> isBlack(Col)
+        ; isWhite(Col)),
         nth0(H1, BoardState, DestinationLine),
         nth0(V1, DestinationLine, DestinationCol),
-        isEmpty(DestinationCol) %Needs to go to an empty thing.
+        (isEmpty(DestinationCol) ;
+        (isPlayer2(CP)
+        -> isBlack(Col)
+        ; isWhite(Col))) %Needs to go to an empty thing.
     ), 
     IntermediateMoves),
     print('Intermediate Moves: '), print(IntermediateMoves), nl,
