@@ -24,7 +24,7 @@ loop(I, X, CP) :-
     print(CP),nl,
     askForInput(R, C, V, H, X, CP),
     (play(R, C, V, H, X, X1, CP)
-    ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+    ->(game_over(X1, 'P1') ; game_over(X1, 'P2')
       ->menu
       ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
     ; loop(I,X,CP)).
@@ -37,14 +37,14 @@ loop_PC(I, X, CP) :-
     -> choose_play(X, CP, Play, Level),
        unzipPlay(Play, R, C, V, H),
        (play(R, C, V, H, X, X1, CP)
-       ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+       ->(game_over(X1, 'P1') ; game_over(X1, 'P2')
          ->menu
          ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
        ; loop(I,X,CP)
         )
     ; askForInput(R, C, V, H, X, CP),
       (play(R, C, V, H, X, X1, CP)
-       ->(check_WhitePlayer_won(X1, 'P1') ; check_BlackPlayer_won(X1, 'P2')
+       ->(game_over(X1, 'P1') ; game_over(X1, 'P2')
          ->menu
          ; changePlayer(CP, NewCP), loop(0, X1, NewCP))
        ; loop(I,X,CP)

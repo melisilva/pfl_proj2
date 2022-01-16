@@ -108,6 +108,10 @@ list_member(-1,Row), if we get yes, Player black hasnt won. If we get no to both
 - Same logic for the last two rows but we check list_member(1,Row).
 */
 
+game_over(GameState, Winner):- (isPlayer1(Winner)
+                                ->check_WhitePlayer_won(GameState,Winner); 
+                              check_BlackPlayer_won(GameState,Winner)).
+
 check_WhitePlayer_won(X,Y):- 
                           nth0(7, X, Row), 
                           \+list_member(0,Row),
