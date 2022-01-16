@@ -21,9 +21,9 @@ changePlayer('P2', 'P1').
 
 loop(-1, _).
 loop(I, [BoardState, CP]) :-
-    print(CP),nl,
-    askForInput(R, C, V, H, BoardState, CP),
-    (move(R, C, V, H, [BoardState, CP], NewGameState)
+    print(CP), nl,
+    askForInput(R, C, V, H, [BoardState, CP]),
+    (move([R, C, V, H], [BoardState, CP], NewGameState)
     ->(game_over(NewGameState, Winner) ; game_over(NewGameState, Winner)
       ->menu
       ; changePlayer(CP, NewCP), loop(0, [NewBoardState, NewCP]))
@@ -47,7 +47,7 @@ loop_PC(I, [BoardState, CP]) :-
       (move([R, C, V, H], GameState, NewGameState, CP)
        ->(game_over(NewBoardState, Winner) ; game_over(NewBoardState, Winner)
          -> menu
-         ; changePlayer(CP, NewCP), loop(0, [NewBoardState, NewCP])
+         ; changePlayer(CP, NewCP), loop(0, [NewBoardState, NewCP]))
        ; loop(I, [BoardState, CP])
       )
     ).

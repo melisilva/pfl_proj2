@@ -23,6 +23,7 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
     V1 is C + V,
     print('V1 '), print(V1), nl,
     nth0(R, BoardState, Line),
+    display_game([BoardState, CP]),
     nth0(C, Line, Col),
     print('Col '), print(Col), nl,
     (isPlayer1(CP)
@@ -88,7 +89,7 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, CP]) :-
         replace(I1, BoardState, Line2, BoardState2),
         replace(C, Line, 0, Line3),
         replace(R, BoardState2, Line3, NewBoardState),
-        display_game([NewBoardState, CP])
+        display_game([NewBoardState, CP]),
         askForHV(I1, I2, V1, H1, [NewBoardState, CP])
       )
     ).
@@ -110,7 +111,7 @@ list_member(-1,Row), if we get yes, Player black hasnt won. If we get no to both
 */
 
 game_over([BoardState, CP], Winner):- 
-   (isPlayer1(CP),
+   (isPlayer1(CP)
    -> check_WhitePlayer_won(BoardState, CP, Winner)
    ; check_BlackPlayer_won(BoardState, CP, Winner)
    ).
@@ -135,4 +136,7 @@ check_BlackPlayer_won(X, Y, Winner):-
    Winner is Y,
    congratulate_winner(Y).
 
-congratulate_winner(Y):- print('Congrats on winning the game, player '), print(Y),nl.
+congratulate_winner(Y) :-
+   print('Congrats on winning the game, player '),
+   print(Y),
+   nl.

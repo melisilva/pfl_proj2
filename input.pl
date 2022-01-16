@@ -1,5 +1,5 @@
 check_horizontal_and_vertical(H,V):-
-    print(H),nl,print(V),nl,
+    print(H), nl, print(V), nl,
     ((H==2; H== (-2)),(V==1; V== (-1)));
     ((H==1; H== (-1)),(V==2; V== (-2))).
 
@@ -8,6 +8,8 @@ ln :- print('\n').
 isValidNumber(Number) :- Number >= 1, Number =<5.
 
 checkR_C(R, C, [BoardState, CP]) :-
+    display_game([BoardState, CP]),
+    print('R: '), print(R), nl, print('C: '), print(C), nl,
     R =< 8, R >= 0, C =< 8, C >= 0,
     nth0(R, BoardState, Line),
     nth0(C, Line, Col),
@@ -30,7 +32,7 @@ askForInput(R, C, V, H, GameState) :-
             read(V),
             check_horizontal_and_vertical(H,V)
         ),
-    isValidPos(R, C, V, H, GameState)
+    isValidPos([R, C, V, H], GameState)
     ).
 
 askForHV(R, C, V, H, [BoardState, CP]):-
