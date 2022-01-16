@@ -34,22 +34,21 @@ unzipMove([R, C, V, H], R, C, V, H).
 loop_PC(-1, _).
 %loop_pc(I, GameState)
 loop_PC(I, [BoardState, CP], Type) :-
-    (Type \= 'Human'
-    -> choose_move([BoardState, CP], Move, Level),
-       unzipMove(Move, R, C, V, H),
-       (move([R, C, V, H], BoardState, NewBoardState, CP)
-       -> (game_over(NewBoardState, Winner) ; game_over(NewBoardState, Winner)
-         ->menu
-         ; changePlayer(CP, NewCP), loop_PC(0, [NewGameState, NewCP], 'Human'))
-       ; loop_PC(I, [BoardState, CP], 'PC')
-       )
-    ; askForInput(R, C, V, H, [BoardState, CP]),
-      (move([R, C, V, H], [BoardState, CP], NewGameState)
+    (Type == 'Human'
+    -> askForInput(R, C, V, H, [BoardState, CP]),
+      (move([R, C, V, H], [BoardState, CP], NewGameState) 
       ->(game_over(NewGameState, Winner) ; game_over(NewGameState, Winner)
         -> menu
-        ; changePlayer(CP, NewCP), loop_PC(0, [NewBoardState, NewCP], 'PC'))
+        ; changePlayer(CP, NewCP), loop_PC(0, NewGameState, 'PC'))
       ; loop_PC(I, [BoardState, CP], 'Human'))
-    ).
+    ; choose_move([BoardState, CP], Move, Level),
+      unzipMove(Move, R, C, V, H),
+      (move([R, C, V, H], [BoardState, CP], NewGameState)
+      -> (game_over(NewGameState, Winner) ; game_over(NewGameState, Winner)
+         ->menu
+         ; changePlayer(CP, NewCP), loop_PC(0, NewGameState, 'Human'))
+      ; loop_PC(I, [BoardState, CP], 'PC')
+      )).
     
 
 start :-
@@ -57,10 +56,12 @@ start :-
     display_game(GameState),
     loop(0, GameState).
 
+unzip_game([BoardState, CP], BoardState, CP).
 start_PC_HP :-
     initial_state(GameState),
+    unzip_game(GameState, BoardState, CP),
     display_game(GameState),
-    loop_PC(0, GameState, 'Human').
+    loop_PC(0, [BoardState, CP], 'Human').
 
 /*
 display_game(GameState)

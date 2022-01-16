@@ -18,14 +18,10 @@ isPlayer2(CP) :- CP == 'P2'.
 %If not, its not possible to play.
 isValidPos('').
 isValidPos([R, C, V, H], [BoardState, CP]) :-
-    H1 is R + H,
-    print('H1 '), print(H1), nl,
-    V1 is C + V,
-    print('V1 '), print(V1), nl,
+    H1 is R + (H),
+    V1 is C + (V),
     nth0(R, BoardState, Line),
-    display_game([BoardState, CP]),
     nth0(C, Line, Col),
-    print('Col '), print(Col), nl,
     (isPlayer1(CP)
     -> (isWhite(Col)
         -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
