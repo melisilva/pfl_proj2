@@ -14,7 +14,7 @@ initial_state([[
     [0,0,0,0,0,0,0,0,0],
     [-1,-1,-1,-1,-1,-1,-1,-1,-1],
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
-], 'P1']).
+], 'P2']).
 
 changePlayer('P1', 'P2').
 changePlayer('P2', 'P1').
@@ -39,7 +39,7 @@ loop_PC(I, [BoardState, CP], Type) :-
       (move([R, C, V, H], [BoardState, CP], NewGameState) 
       ->(game_over(NewGameState, Winner) ; game_over(NewGameState, Winner)
         -> menu
-        ; changePlayer(CP, NewCP), loop_PC(0, NewGameState, 'PC'))
+        ; changePlayer(CP, NewCP), print('NewCP: '), print(NewCP), nl, loop_PC(0, NewGameState, 'PC'))
       ; loop_PC(I, [BoardState, CP], 'Human'))
     ; choose_move([BoardState, CP], Move, Level),
       unzipMove(Move, R, C, V, H),
@@ -61,7 +61,7 @@ start_PC_HP :-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
-    loop_PC(0, [BoardState, CP], 'Human').
+    loop_PC(0, [BoardState, CP], 'PC').
 
 /*
 display_game(GameState)
@@ -79,4 +79,3 @@ choose_move(GameState,Level,Move) PC move
 Let's consider 3 different sizes: 9 (normal one), 6, 7
 This is for eGameStatetra credit*/
 initial_state(Size,GameState):- initial_state(Size, GameState).
-

@@ -36,7 +36,7 @@ valid_V_H(-2, -1).
 
 valid_moves_aux(GameState, [], Moves) :- !.
 valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
-    print('CP: '), print(CP), nl,
+    print('CP: '),print(CP), nl,
     unzipPos(Head, R, C),
     findall([R, C, V, H],
     (
@@ -57,18 +57,23 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
     ), 
     IntermediateMoves),
     print('Intermediate Moves: '), print(IntermediateMoves), nl,
-    valid_moves_aux(GameState, Tail, [Moves|IntermediateMoves]).
+    valid_moves_aux([BoardState,CP], Tail,MoreIntermediatePlays),
+    append(IntermediateMoves,  MoreIntermediatePlays, Moves).
 
 valid_pos([BoardState, CP], Positions) :-
+    print('CP: '),print(CP), nl,
     findall(R-C,
     (
         nth0(R, BoardState, Line),
         nth0(C, Line, Col),
+        print('R: '), print(R), nl,
+        print('C: '),print(C),nl, 
         (isPlayer2(CP)
-        -> isWhite(Col)
-        ; isBlack(Col))
+        -> isBlack(Col)
+        ; isWhite(Col))
     ),
-    Positions).
+    Positions),
+    print('Positions: '),print(Positions),nl.
 
 %Level 2
 %choose_move(GameState, CP, 2, Move):- %select move based on board evaluation
