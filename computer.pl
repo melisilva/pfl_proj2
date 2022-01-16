@@ -10,8 +10,8 @@
     -> get_player
 */
 
-choose_move(GameState, CP, Play, Level) :-
-    valid_moves(GameState, CP, Moves),
+choose_move([BoardState, CP], Play, Level) :-
+    valid_moves(BoardState, CP, Moves),
     length(Moves, N),
     print('Plays: '), print(Moves), nl,
     print('Length Plays: '), print(N), nl,
