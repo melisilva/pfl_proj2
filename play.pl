@@ -45,7 +45,16 @@ loop_PC([BoardState, CP], Type) :-
          ; loop_PC(NewGameState, 'Human'))
       ; loop_PC([BoardState, CP], 'PC')
       )).
-    
+
+loop_only_PC([BoardState, CP], Type) :-
+   choose_move([BoardState, CP], Move, Level),
+      unzipMove(Move, R, C, V, H),
+      (move([R, C, V, H], [BoardState, CP], NewGameState)
+      -> (game_over(NewGameState, Winner)
+         -> menu
+         ; loop_only_PC(NewGameState, 'PC'))
+      ; loop_only_PC([BoardState, CP], 'PC')
+      ).
 
 start :-
     initial_state(GameState),
@@ -64,6 +73,13 @@ start_PC_HP :-
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
     loop_PC([BoardState, CP], 'PC').
+
+start_PC_PC:-
+    initial_state(GameState),
+    unzip_game(GameState, BoardState, CP),
+    display_game(GameState),
+    loop_only_PC([BoardState, CP], 'PC').
+
 
 /*
 display_game(GameState)
