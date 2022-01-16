@@ -57,7 +57,7 @@ start_PC_HP :-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
-    loop_PC(0, [BoardState, CP], 'PC').
+    loop_PC(0, [BoardState, CP], 'Human').
 
 /*
 display_game(GameState)
