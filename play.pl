@@ -31,7 +31,7 @@ unzipMove([R, C, V, H], R, C, V, H).
 %loop_pc(GameState, Type)
 loop_PC([BoardState, CP], Type) :-
     (Type == 'Human'
-    -> askForInput(R, C, V, H, [BoardState, CP]), print('CP antes: '), print(CP), nl,
+    -> askForInput(R, C, V, H, [BoardState, CP]), 
       (move([R, C, V, H], [BoardState, CP], NewGameState) 
       ->(game_over(NewGameState, Winner)
         -> menu
@@ -53,11 +53,17 @@ start :-
     loop(0, GameState).
 
 unzip_game([BoardState, CP], BoardState, CP).
+start_HP_PC :-
+    initial_state(GameState),
+    unzip_game(GameState, BoardState, CP),
+    display_game(GameState),
+    loop_PC([BoardState, CP], 'Human').
+
 start_PC_HP :-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
-    loop_PC(0, [BoardState, CP], 'Human').
+    loop_PC([BoardState, CP], 'PC').
 
 /*
 display_game(GameState)
