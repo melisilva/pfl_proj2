@@ -11,6 +11,8 @@ isMiGameStateed(Pos) :- Pos == -3.
 isEqual(Pos1, Pos2) :- Pos1 == Pos2.
 isPlayer1(CP) :- CP == 'P1'.
 isPlayer2(CP) :- CP == 'P2'.
+changePlayer('P1', 'P2').
+changePlayer('P2', 'P1').
 
 
 %isValidPos(Row, Collum, Vertical, Horizontal, Board, Player)
@@ -41,7 +43,7 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
     !.
 
 
-move([R, C, V, H], [BoardState, CP], [NewBoardState, CP]) :-
+move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP]) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
     I1 is R + H,
@@ -55,27 +57,31 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, CP]) :-
           replace(I1, BoardState, Line2, BoardState2), %And replace the board with the new line.
           replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
           replace(R, BoardState2, Line3, NewBoardState), %And replace the board with the new line.
-          display_game([NewBoardState, CP])
+          changePlayer(CP, NewCP),
+          display_game([NewBoardState, NewCP])
        ; (isOnlyBlack(Col)
          ->I is C + V,
           replace(I, Line1, -1, Line2),
           replace(I1, BoardState, Line2, BoardState2),
           replace(C, Line, 0, Line3),
           replace(R, BoardState2, Line3, NewBoardState),
-          display_game([NewBoardState, CP])
+          changePlayer(CP, NewCP),
+          display_game([NewBoardState, NewCP])
        ; (isPlayer1(CP)
           ->I is C + V,
           replace(I, Line1, 1, Line2),
           replace(I1, BoardState, Line2, BoardState2),
           replace(C, Line, -1, Line3),
           replace(R, BoardState2, Line3, NewBoardState),
-          display_game([NewBoardState, CP])
+          changePlayer(CP, NewCP),
+          display_game([NewBoardState, NewCP])
       ;   I is C + V,
           replace(I, Line1, -1, Line2),
           replace(I1, BoardState, Line2, BoardState2),
           replace(C, Line, 1, Line3),
           replace(R, BoardState2, Line3, NewBoardState),
-          display_game([NewBoardState, CP])
+          changePlayer(CP, NewCP),
+          display_game([NewBoardState, NewCP])
        )))
     ; (isEqual(Col1, Col) %If he landed on a place where there is already a piece of the same color...
       -> error('You cannot jump to a place you yourself are ocupying!'), nl, fail %...then it is not a valid play to make.
@@ -85,8 +91,9 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, CP]) :-
         replace(I1, BoardState, Line2, BoardState2),
         replace(C, Line, 0, Line3),
         replace(R, BoardState2, Line3, NewBoardState),
+        changePlayer(CP, NewCP),
         display_game([NewBoardState, CP]),
-        askForHV(I1, I2, V1, H1, [NewBoardState, CP])
+        askForHV(I1, I2, V1, H1, [NewBoardState, NewCP])
       )
     ).
     
