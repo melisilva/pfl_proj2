@@ -24,7 +24,7 @@ loop(I, [BoardState, CP]) :-
     print(CP),nl,
     askForInput(R, C, V, H, BoardState, CP),
     (move(R, C, V, H, [BoardState, CP], NewGameState)
-    ->(check_WhitePlayer_won(NewGameState, 'P1') ; check_BlackPlayer_won(NewGameState, 'P2')
+    ->(game_over(NewGameState, Winner) ; game_over(NewGameState, Winner)
       ->menu
       ; changePlayer(CP, NewCP), loop(0, [NewBoardState, NewCP]))
     ; loop(I, [BoardState, CP])).
@@ -38,14 +38,14 @@ loop_PC(I, [BoardState, CP]) :-
     -> choose_move(BoardState, CP, Move, Level),
        unzipMove(Move, R, C, V, H),
        (move([R, C, V, H], BoardState, NewBoardState, CP)
-       ->(check_WhitePlayer_won(NewBoardState, 'P1') ; check_BlackPlayer_won(NewBoardState, 'P2')
+       ->(game_over(NewBoardState, Winner) ; game_over(NewBoardState, Winner)
          ->menu
          ; changePlayer(CP, NewCP), loop(0, [NewGameState, NewCP]))
        ; loop(I, [BoardState, CP])
         )
     ; askForInput(R, C, V, H, GameState, CP),
       (move([R, C, V, H], GameState, NewGameState, CP)
-       ->(check_WhitePlayer_won(NewBoardState, 'P1') ; check_BlackPlayer_won(NewBoardState, 'P2')
+       ->(game_over(NewBoardState, Winner) ; game_over(NewBoardState, Winner)
          -> menu
          ; changePlayer(CP, NewCP), loop(0, [NewBoardState, NewCP])
        ; loop(I, [BoardState, CP])
