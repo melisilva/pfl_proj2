@@ -39,8 +39,7 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
          )
       ; isBlack(Col), !
       )
-    ),
-    !.
+    ).
 
 
 move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
@@ -91,11 +90,10 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
         replace(I1, BoardState, Line2, BoardState2),
         replace(C, Line, 0, Line3),
         replace(R, BoardState2, Line3, NewBoardState),
-        changePlayer(CP, NewCP),
-        %display_game([NewBoardState, CP]),
+        display_game([NewBoardState, CP]),
         (Type == 'Human'
-        ->askForHV(I1, I2, V1, H1, [NewBoardState, NewCP])
-        ; valid_move_pos([NewBoardState, NewCP], I1, I2, Moves)),
+        ->askForHV(I1, I2, V1, H1, [NewBoardState, CP])
+        ; valid_move_pos([NewBoardState, CP], I1, I2, Moves)),
         !
       )
     ).
