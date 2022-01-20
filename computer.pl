@@ -82,8 +82,8 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
         nth0(V1, DestinationLine, DestinationCol),
         (isEmpty(DestinationCol) ;
         (isPlayer2(CP)
-        -> isBlack(Col)
-        ; isWhite(Col))) %Needs to go to an empty thing.
+        -> isBlack(DestinationCol)
+        ; isWhite(DestinationCol))) %Needs to go to an empty thing.
     ), 
     IntermediateMoves),
     valid_moves_aux([BoardState,CP], Tail,MoreIntermediatePlays),
