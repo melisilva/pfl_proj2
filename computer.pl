@@ -12,6 +12,7 @@
 
 choose_move(GameState, Move, Level) :-
     valid_moves(GameState, Moves),
+    print(Moves),nl,nl,
     length(Moves, N),
     random(1, N, Index),
     nth1(Index, Moves, Move).
@@ -50,8 +51,8 @@ valid_move_pos([BoardState,CP],R,C,Moves):-
         nth0(V1, DestinationLine, DestinationCol),
         (isEmpty(DestinationCol) ;
         (isPlayer2(CP)
-        -> isBlack(Col)
-        ; isWhite(Col))) %Needs to go to an empty thing.
+        -> isWhite(DestinationCol)
+        ; isBlack(DestinationCol))) %Needs to go to an empty thing.
     ), 
     Moves),
     length(Moves, N),
@@ -82,8 +83,8 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
         nth0(V1, DestinationLine, DestinationCol),
         (isEmpty(DestinationCol) ;
         (isPlayer2(CP)
-        -> isBlack(Col)
-        ; isWhite(Col))) %Needs to go to an empty thing.
+        -> isWhite(DestinationCol)
+        ; isBlack(DestinationCol))) %Needs to go to an empty thing.
     ), 
     IntermediateMoves),
     valid_moves_aux([BoardState,CP], Tail,MoreIntermediatePlays),
