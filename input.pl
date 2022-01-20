@@ -32,17 +32,15 @@ askForInput(R, C, V, H, GameState) :-
     isValidPos([R, C, V, H], GameState)
     ).
 
-askForHV(R, C, V, H, [BoardState,CP]):-
+askForHV(R, C, V, H, [BoardState, CP]):-
    repeat,
     (
-        (
-            print('Please input a value to add to row (horizontal): '),
-            read(H),
-            print('Please input a value to add to column (vertical): '),
-            read(V),
-            check_horizontal_and_vertical(H,V)
-        ),
-    isValidPos([R, C, V, H], [BoardState,CP])
+        print('Please input a value to add to row (horizontal): '),
+        read(H),
+        print('Please input a value to add to column (vertical): '),
+        read(V),
+        check_horizontal_and_vertical(H,V),
+        isValidPos([R, C, V, H], [BoardState,CP])
     ).
 
 read_number(Number):-
