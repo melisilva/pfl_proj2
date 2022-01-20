@@ -7,7 +7,7 @@ isBlack(Pos) :- Pos == (-1); Pos == (-3).
 isWhite(Pos) :- Pos == 1; Pos == (-3).
 isOnlyWhite(Pos) :- Pos == 1.
 isOnlyBlack(Pos) :- Pos == -1.
-isMiGameStateed(Pos) :- Pos == -3.
+isMPos(Pos) :- Pos == -3.
 isEqual(Pos1, Pos2) :- Pos1 == Pos2.
 isPlayer1(CP) :- CP == 'P1'.
 isPlayer2(CP) :- CP == 'P2'.
@@ -83,7 +83,12 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
       %One can only jump should they land on a place with a piece of the opposite color.
       ; replace(I2, Line1, -3, Line2),
         replace(I1, BoardState, Line2, BoardState2),
-        replace(C, Line, 0, Line3),
+        (isMPos(Col),
+          (isPlayer1(CP)
+          ->replace(C, Line, -1, Line3)
+          ;  replace(C, Line, 1, Line3)
+          ); replace(C, Line, 0, Line3)
+        ),
         replace(R, BoardState2, Line3, BoardState3),
         display_game([BoardState3, CP]),
          (Type == 'Human'
