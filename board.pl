@@ -92,10 +92,11 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
         replace(C, Line, 0, Line3),
         replace(R, BoardState2, Line3, NewBoardState),
         changePlayer(CP, NewCP),
-        display_game([NewBoardState, CP]),
+        %display_game([NewBoardState, CP]),
         (Type == 'Human'
         ->askForHV(I1, I2, V1, H1, [NewBoardState, NewCP])
-        ; valid_move_pos([NewBoardState, NewCP],I1,I2,Moves))
+        ; valid_move_pos([NewBoardState, NewCP], I1, I2, Moves)),
+        !
       )
     ).
     

@@ -22,19 +22,19 @@ symbol(-1,S):- S='B'.
 symbol(1,S):- S='W'.
 symbol(-3,S):-S='M'.
 
-letter(1, L) :- L='A'.
-letter(2, L) :- L='B'.
-letter(3, L) :- L='C'.
-letter(4, L) :- L='D'.
-letter(5, L) :- L='E'.
-letter(6, L) :- L='F'.
-letter(7, L) :- L='G'.
-letter(8, L) :- L='H'.
-letter(9, L) :- L='I'.
+letter(1, L) :- L='0'.
+letter(2, L) :- L='1'.
+letter(3, L) :- L='2'.
+letter(4, L) :- L='3'.
+letter(5, L) :- L='4'.
+letter(6, L) :- L='5'.
+letter(7, L) :- L='6'.
+letter(8, L) :- L='7'.
+letter(9, L) :- L='8'.
 
 display_game([BoardState, CP]) :-
     print('CP: '), print(CP), nl,
-    write('   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n'),
+    write('   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |\n'),
     write('---|---|---|---|---|---|---|---|---|---|\n'),
     printMatrix(BoardState, 1).
 
