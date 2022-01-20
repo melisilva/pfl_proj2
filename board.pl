@@ -115,7 +115,7 @@ list_member(-1,Row), if we get yes, Player black hasnt won. If we get no to both
 */
 
 game_over([BoardState, CP], Winner):- 
-   (isPlayer1(CP)
+   (isPlayer2(CP)
    -> check_WhitePlayer_won(BoardState, CP, Winner)
    ; check_BlackPlayer_won(BoardState, CP, Winner)
    ).
@@ -127,8 +127,7 @@ check_WhitePlayer_won(X, Y, Winner) :-
    nth0(8, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(-1, Row1),
-   Winner is Y,
-   congratulate_winner(Y).
+   congratulate_winner('P1').
 
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
@@ -137,8 +136,7 @@ check_BlackPlayer_won(X, Y, Winner):-
    nth0(1, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(1, Row1),
-   Winner is Y,
-   congratulate_winner(Y).
+   congratulate_winner('P2').
 
 congratulate_winner(Y) :-
    print('Congrats on winning the game, player '),
