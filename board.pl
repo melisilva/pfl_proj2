@@ -27,7 +27,6 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
     (isPlayer1(CP)
     -> (isWhite(Col)
         -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
-            -> isValidPos('')
             ; error('The computed position is not within the board.'), nl, fail
            )
         ; isWhite(Col), !
@@ -91,10 +90,9 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
         replace(C, Line, 0, Line3),
         replace(R, BoardState2, Line3, NewBoardState),
         display_game([NewBoardState, CP]),
-        (Type == 'Human'
+         (Type == 'Human'
         ->askForHV(I1, I2, V1, H1, [NewBoardState, CP])
-        ; valid_move_pos([NewBoardState, CP], I1, I2, Moves)),
-        !
+        ; valid_move_pos([NewBoardState, NewCP],I1,I2,Moves))
       )
     ).
     
