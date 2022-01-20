@@ -44,13 +44,13 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
 move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
-    I1 is R + H,
+    I1 is R + (H),
     nth0(I1, BoardState, Line1),
-    I2 is C + V,
+    I2 is C + (V),
     nth0(I2, Line1, Col1),
     (isEmpty(Col1)  %If Col1 is not empty, then we have 2 options.
     -> (isOnlyWhite(Col)
-       -> I is C + V, 
+       -> I is C + (V), 
           replace(I, Line1, 1, Line2), %First, we replace the thing with the new value (-1 or 1).
           replace(I1, BoardState, Line2, BoardState2), %And replace the board with the new line.
           replace(C, Line, 0, Line3), %Then we replace the old position with 0, as it is now empty.
@@ -58,7 +58,7 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
           changePlayer(CP, NewCP),
           display_game([NewBoardState, NewCP])
        ; (isOnlyBlack(Col)
-         ->I is C + V,
+         ->I is C + (V),
           replace(I, Line1, -1, Line2),
           replace(I1, BoardState, Line2, BoardState2),
           replace(C, Line, 0, Line3),
@@ -66,14 +66,14 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
           changePlayer(CP, NewCP),
           display_game([NewBoardState, NewCP])
        ; (isPlayer1(CP)
-          ->I is C + V,
+          ->I is C + (V),
           replace(I, Line1, 1, Line2),
           replace(I1, BoardState, Line2, BoardState2),
           replace(C, Line, -1, Line3),
           replace(R, BoardState2, Line3, NewBoardState),
           changePlayer(CP, NewCP),
           display_game([NewBoardState, NewCP])
-      ;   I is C + V,
+      ;   I is C + (V),
           replace(I, Line1, -1, Line2),
           replace(I1, BoardState, Line2, BoardState2),
           replace(C, Line, 1, Line3),
@@ -84,7 +84,7 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
     ; (isEqual(Col1, Col) %If he landed on a place where there is already a piece of the same color...
       -> error('You cannot jump to a place you yourself are ocupying!'), nl, fail %...then it is not a valid play to make.
       %One can only jump should they land on a place with a piece of the opposite color.
-      ; I is C + V,
+      ; I is C + (V),
         replace(I, Line1, -3, Line2),
         replace(I1, BoardState, Line2, BoardState2),
         replace(C, Line, 0, Line3),
