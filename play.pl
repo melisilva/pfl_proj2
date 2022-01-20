@@ -23,7 +23,7 @@ loop(I, [BoardState, CP]) :-
     (move([R, C, V, H], [BoardState, CP], NewGameState,'Human')
     ->(game_over(NewGameState, Winner)
       -> menu
-      ; changePlayer(CP, NewCP), loop(0, NewGameState))
+      ; loop(0, NewGameState))
     ; loop(I, [BoardState, CP])).
 
 unzipMove([R, C, V, H], R, C, V, H).
