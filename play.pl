@@ -56,25 +56,25 @@ loop_only_PC([BoardState, CP], Type) :-
       ; loop_only_PC([BoardState, CP], 'PC')
       ).
 
-start :-
+menu_option(1):-
     initial_state(GameState),
     display_game(GameState),
     loop(0, GameState).
 
 unzip_game([BoardState, CP], BoardState, CP).
-start_HP_PC :-
+menu_option(2):-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
     loop_PC([BoardState, CP], 'Human').
 
-start_PC_HP :-
+menu_option(3):-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
     loop_PC([BoardState, CP], 'PC').
 
-start_PC_PC:-
+menu_option(4):-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
     display_game(GameState),
