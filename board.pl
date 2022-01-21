@@ -41,7 +41,7 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
     ).
 
 
-move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP],Type) :-
+move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP], Type) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
     print('Col: '), print(Col), nl,
@@ -114,6 +114,9 @@ list_member(-1,Row), if we get yes, Player black hasnt won. If we get no to both
 - Same logic for the last two rows but we check list_member(1,Row).
 */
 
+
+game_over(_, 'P1').
+game_over(_, 'P2').
 game_over([BoardState, CP], Winner):- 
    (isPlayer2(CP)
    -> check_WhitePlayer_won(BoardState, CP, Winner)
@@ -127,7 +130,7 @@ check_WhitePlayer_won(X, Y, Winner) :-
    nth0(8, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(-1, Row1),
-   congratulate_winner('P1').
+   game_over([X, Y], 'P1').
 
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
@@ -136,9 +139,4 @@ check_BlackPlayer_won(X, Y, Winner):-
    nth0(1, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(1, Row1),
-   congratulate_winner('P2').
-
-congratulate_winner(Y) :-
-   print('Congrats on winning the game, player '),
-   print(Y),
-   nl.
+   game_over([X, Y], 'P2').
