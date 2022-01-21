@@ -120,14 +120,36 @@ Além disto, ***move/4*** impede um jogador de ocupar duplamente uma posição c
 O final do jogo é testado com o predicado ***game_over/2***. O teste passa por verificar as 2 primeiras e 2 últimas linhas do tabuleiro: para o jogador 1, se as duas últimas estiverem preenchidas pelas suas peças brancas (1), então este ganhou; para o jogador 2, vice-versa, com as suas peças pretas (-1).
 
 ```perl
+game_over(_, 'P1').
+game_over(_, 'P2').
 game_over([BoardState, CP], Winner):- 
    (isPlayer2(CP)
    -> check_WhitePlayer_won(BoardState, CP, Winner)
    ; check_BlackPlayer_won(BoardState, CP, Winner)
    ).
+   
+check_WhitePlayer_won(X, Y, Winner) :- 
+   nth0(7, X, Row), 
+   \+list_member(0, Row),
+   \+list_member(-1, Row),
+   nth0(8, X, Row1), 
+   \+list_member(0, Row1), 
+   \+list_member(-1, Row1),
+   game_over([X, Y], 'P1').
+
+check_BlackPlayer_won(X, Y, Winner):-
+   nth0(0, X, Row), 
+   \+list_member(0, Row), 
+   \+list_member(1, Row), 
+   nth0(1, X, Row1), 
+   \+list_member(0, Row1), 
+   \+list_member(1, Row1),
+   game_over([X, Y], 'P2').
 ```
 
+### Lista de Jogadas Válidas
 
+O predicado **valid_moves/2** gera todas as jogadas possíveis. Isto serve para permitir os modos de jogo contra o computador ou mesmo o jogo entre dois computadores. O predicado divide-se em duas partes. Inicialmente, procuramos no tabuleiro do estado atual do jogo todas as posições que o computador pode jogar - no máximo, serão 
 
 ## **Bibliografia**
 

@@ -93,6 +93,9 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
 valid_pos([BoardState, CP], Positions) :-
     findall(R-C,
     (
+        (isPlayer1(CP)
+        -> R < 7
+        ; R > 1), 
         nth0(R, BoardState, Line),
         nth0(C, Line, Col),
         (isPlayer2(CP)
