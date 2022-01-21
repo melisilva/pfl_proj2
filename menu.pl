@@ -18,7 +18,7 @@ renpaarden_logo:-
     write(' ##   ##     ##         ##     ## ##  ##        ##     ##  ##     ##  ##   ##     ##     ##  ##         ##     ## ##\n' ),
     write(' ##     ##   #########  ##      ####  ##        ##     ##  ##     ##  ##     ##   ########   #########  ##      ####\n').
 
-menu :-
+play :-
   renpaarden_logo,
   write('\n\n'),
   menu_option_format(1, 'Human vs Human'),
