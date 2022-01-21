@@ -1,7 +1,9 @@
 :-include('./input.pl').
 
+/*Predicado que faz a limpeza da tela*/
 clear :- write('\33\[2J').
 
+/*Predicados de formatação do menu.*/
 menu_option_format(Option, Details):-
   format('*~t~d~t~15|~t~a~t~40+~t*~57|~n',
         [Option, Details]).
@@ -9,6 +11,7 @@ menu_option_format(Option, Details):-
 menu_header_format(Header):-
   format('~n~`*t ~p ~`*t~57|~n', [Header]).
 
+/*Predicado de display do logo do jogo.*/
 renpaarden_logo:-
     write(' ########    #########  ####      ##  ########     ###        ###     ########    ########   #########  ####      ##\n'),
     write(' ##     ##   ##         ## ##     ##  ##     ##   ## ##      ## ##    ##     ##   ##     ##  ##         ## ##     ##\n'),
@@ -18,6 +21,7 @@ renpaarden_logo:-
     write(' ##   ##     ##         ##     ## ##  ##        ##     ##  ##     ##  ##   ##     ##     ##  ##         ##     ## ##\n' ),
     write(' ##     ##   #########  ##      ####  ##        ##     ##  ##     ##  ##     ##   ########   #########  ##      ####\n').
 
+/*Predicado inicial do jogo. Faz o display do menu com o qual os jogadores podem interagir para iniciar diferentes tipos de jogos.*/
 play :-
   renpaarden_logo,
   write('\n\n'),
@@ -30,6 +34,8 @@ play :-
   write('\n\n'),
   read_number(Number).
 
+%menu_option(-X)
+/* Display das instruções do jogo. */
 menu_option(5):-
   %clear,
   menu_header_format('INSTRUCTIONS'),
@@ -44,6 +50,7 @@ menu_option(5):-
   write('  The game ends when one of the players stones occupies the original positions of their opponents stones.\n\n'),
   menu.
 
+/*Saída do jogo.*/
 menu_option(6):-
   write('Thank You For Playing\n\n'),
   renpaarden_logo.
