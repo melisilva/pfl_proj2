@@ -27,8 +27,6 @@ Existe uma regra especial, contudo: caso uma pedra salte para um quadrado ocupad
 
 O jogo termina quando um dos jogadores consegue que todas as suas pedras atinjam a posição inicial das pedras do seu adversário.
 
-
-
 ## Lógica do Jogo
 
 ### Representação Interna do Jogo
@@ -113,6 +111,10 @@ Quando o predicado anterior passa afirmativamente, ***move/4*** é o predicado o
 - Uma peça branca ou preta vai para uma posição ocupada por uma peça de cor contrária (-3);
 - Uma posição duplamente ocupada (-3) passa a ser ocupada por uma só peça com um salto do jogador que a fez ficar duplamente cheia.
 
+Os dois últimos casos correspondem à regra especial mencionada anteriormente: esta é a única secção do predicado que lida (embora indiretamente - chama um predicado que lê os dados necessários) com ***input*** do utilizador, visto que, quando uma posição é ocupada por duas peças, a última peça a entrar tem de ser movida novamente.
+
+Não existe nada de muito especial: como o jogador não pode jogar outra peça até esvaziar a posição que está duplamente ocupada, ***R*** e ***C*** ficam imediatamente definidos como essa posição. ***V*** e ***H***, contudo, são à discrição do jogador - até é possível, como com qualquer outra peça do jogo, andar "para trás" no tabuleiro (isto é, andar na direção contrária àquela das linhas que um jogador deve ocupar). Esta decisão foi feita para que casos desta regra especial como este não bloqueiem um jogador e, mais a pensar em jogadores humanos, permitir estratégias mais audazes.
+
 Além disto, ***move/4*** impede um jogador de ocupar duplamente uma posição com duas peças da mesma cor e invoca o predicado de mudança de jogador, ***changePlayer/2***.
 
 ### Final do Jogo
@@ -149,7 +151,73 @@ check_BlackPlayer_won(X, Y, Winner):-
 
 ### Lista de Jogadas Válidas
 
-O predicado **valid_moves/2** gera todas as jogadas possíveis. Isto serve para permitir os modos de jogo contra o computador ou mesmo o jogo entre dois computadores. O predicado divide-se em duas partes. Inicialmente, procuramos no tabuleiro do estado atual do jogo todas as posições que o computador pode jogar - no máximo, serão 
+O predicado **valid_moves/2** gera todas as jogadas possíveis. Isto serve para permitir os modos de jogo contra o computador ou mesmo o jogo entre dois computadores. O predicado divide-se em duas partes. Inicialmente, procuramos no tabuleiro do estado atual do jogo todas as posições que o computador pode jogar - no máximo, serão 16 posições. À medida que peças se colocam nas linhas horizontais extremas, este número diminui.
+
+Geram-se as posições válidas com ***findall/3***. 
+
+```perl
+valid_pos([BoardState, CP], Positions) :-
+    findall(R-C,
+    (
+        (isPlayer1(CP)
+        -> R < 7
+        ; R > 1), 
+        nth0(R, BoardState, Line),
+        nth0(C, Line, Col),
+        (isPlayer2(CP)
+        -> isBlack(Col)
+        ; isWhite(Col))
+    ),
+    Positions).
+```
+
+Com estas posições, geramos então, mais uma vez, com ***findall/3***, todas as jogadas válidas possíveis.
+
+```perl
+valid_moves_aux(GameState, [], Moves) :- !.
+valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
+    unzipPos(Head, R, C),
+    findall([R, C, V, H],
+    (
+        valid_V_H(V, H),
+        H1 is (R) + (H),
+        V1 is (C) + (V), 
+        H1 =< 8,
+        H1 >= 0,
+        V1 =< 8,
+        V1 >= 0,
+        nth0(R, BoardState, Line),
+        nth0(C, Line, Col),
+        (isPlayer2(CP)
+        -> isBlack(Col)
+        ; isWhite(Col)),
+        nth0(H1, BoardState, DestinationLine),
+        nth0(V1, DestinationLine, DestinationCol),
+        (isEmpty(DestinationCol) ;
+        (isPlayer2(CP)
+        -> isWhite(DestinationCol)
+        ; isBlack(DestinationCol))) %Needs to go to an empty thing.
+    ), 
+    IntermediateMoves),
+    valid_moves_aux([BoardState,CP], Tail,MoreIntermediatePlays),
+    append(IntermediateMoves,  MoreIntermediatePlays, Moves).
+```
+
+No *goal* fornecido a esta invocação de ***findall/3***, verificamos tudo o que normalmente é feito com mais predicados num jogo de humano contra humano.
+
+### **Jogada do Computador**
+
+A jogada do computador é sempre aleatória. Não implementamos o nível 2 da inteligência artificial. Limita-se a escolher um número no intervalo definido pelo tamanho da lista de jogadas válidas e efetua essa jogada utilizando, mais uma vez, ***move/4***.
+
+Visto guardarmos os valores possíveis em pares (R-C) ou listas ([R, C, V, H]), temos predicados de prefixos *unzip* que os passam para elementos singulares mais simples de serem usados por outros predicados.
+
+## Conclusão
+
+O presente trabalho permitiu-nos desenvolver uma melhor apetência com a linguagem de programação *Prolog*, ajudando na sua compreensão e melhor utilização. Cremos ter conseguido um jogo funcional e apelativo visualmente apesar das limitações gráficas.
+
+Como melhorias do trabalho, poderíamos mencionar o facto de não termos elaborado (por escassez de tempo), o segundo nível da inteligência artificial. Em termos de problemas conhecidos, testámos o código na melhor da nossa habilidade e acreditamos ter resolvido todos os encontrados.
+
+
 
 ## **Bibliografia**
 

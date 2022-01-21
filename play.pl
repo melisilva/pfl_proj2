@@ -4,6 +4,8 @@
 :-include('./computer.pl').
 
 
+%initial_state(-GameState)
+/* Inicia a representação interna do jogo */
 initial_state([[
     [1,1,1,1,1,1,1,1,1],
     [1,1,1,1,1,1,1,1,1],
@@ -16,7 +18,12 @@ initial_state([[
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ], 'P1']).
 
+%loop(-I, _)
+/* Predicado para terminar o predicado loop/3 */
 loop(-1, _).
+
+%loop(-I, -GameState)
+/* Ciclo do jogo humano vs. humano. */
 loop(I, [BoardState, CP]) :-
     askForInput(R, C, V, H, [BoardState, CP]),
     (move([R, C, V, H], [BoardState, CP], NewGameState,'Human')
@@ -25,14 +32,20 @@ loop(I, [BoardState, CP]) :-
       ; loop(0, NewGameState))
     ; loop(I, [BoardState, CP])).
 
+%congratulate(-Y)
+/* Imprime mensagem de vitória do jogador em Y. */
 congratulate(Y) :-
    print('Congrats on winning the game, player '),
    print(Y),
    nl.
 
+%unzipMove(-Move, +R, +C, +V, +H)
+/* Desdobra Move nos elementos singulares R, C, V e H. */
 unzipMove([R, C, V, H], R, C, V, H).
 
-%loop_pc(GameState, Type)
+
+%loop_pc(-GameState, -Type)
+/* Ciclo dos jogos entre humano vs. computador ou computador vs. humano. */
 loop_PC([BoardState, CP], Type) :-
     (Type == 'Human'
     -> askForInput(R, C, V, H, [BoardState, CP]), 
@@ -50,6 +63,8 @@ loop_PC([BoardState, CP], Type) :-
       ; loop_PC([BoardState, CP], 'PC')
       )).
 
+%loop_only_PC(-GameState, -Type)
+/* Ciclo de jogo entre dois computadores. */
 loop_only_PC([BoardState, CP], Type) :-
    choose_move([BoardState, CP], Move, Level),
       unzipMove(Move, R, C, V, H),
@@ -60,12 +75,13 @@ loop_only_PC([BoardState, CP], Type) :-
       ; loop_only_PC([BoardState, CP], 'PC')
       ).
 
+%menu_option(-X)
+/* Direciona a execução para o modo do jogo correto. */
 menu_option(1):-
     initial_state(GameState),
     display_game(GameState),
     loop(0, GameState).
 
-unzip_game([BoardState, CP], BoardState, CP).
 menu_option(2):-
     initial_state(GameState),
     unzip_game(GameState, BoardState, CP),
@@ -84,20 +100,6 @@ menu_option(4):-
     display_game(GameState),
     loop_only_PC([BoardState, CP], 'PC').
 
-
-/*
-display_game(GameState)
-move(GameState,Move,NewGameState)
-game_over(GameState,Winner)
-valid_moves(GameState, ListOfMoves)
-value(GameState,Player,Value) optional
-choose_move(GameState,Level,Move) PC move
-*/
-
-%play/0
-%main predicate for game start, presents the main menu
-
-/*recebe o tamanho do tabuleiro como argumento e devolve o estado inicial do jogo
-Let's consider 3 different sizes: 9 (normal one), 6, 7
-This is for eGameStatetra credit*/
-initial_state(Size,GameState):- initial_state(Size, GameState).
+%unzip_game(-GameState, +BoardState, +CP)
+/* Desdobra GameState nos elementos singulares BoardState e CP. */
+unzip_game([BoardState, CP], BoardState, CP).

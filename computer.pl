@@ -1,15 +1,8 @@
 :- use_module(library(random)).
 
 %Level 1 
-/*
-    Já feito:
-    -> choose_play (choose_move),
-    -> valid_plays (valid_moves),
-    -> get_player_row_col (get_player_stack_positions),
-    -> get_pos (get_stack_position),
-    -> get_player
-*/
-
+%choose_move(-GameState, +Move, -Level)
+/* Escolhe a jogada do computador */
 choose_move(GameState, Move, Level) :-
     valid_moves(GameState, Moves),
     print(Moves),nl,nl,
@@ -17,12 +10,16 @@ choose_move(GameState, Move, Level) :-
     random(1, N, Index),
     nth1(Index, Moves, Move).
 
+/* Desdobra R-C em elementos singulares */
 unzipPos(R-C, R, C).
 
+%valid_moves(-GameState, +Moves)
+/* Obtém as jogadas possíveis a partir de GameState */
 valid_moves(GameState, Moves) :-
     valid_pos(GameState, Positions),
     valid_moves_aux(GameState, Positions, Moves).
 
+/* Jogadas V-H válidas */
 valid_V_H(1, 2).
 valid_V_H(-1, 2).
 valid_V_H(1, -2).
@@ -32,6 +29,8 @@ valid_V_H(-2, 1).
 valid_V_H(2, -1).
 valid_V_H(-2, -1).
 
+%valid_move_pos(-GameState, -R, -C, +Moves)
+/* Obtém todas as jogadas válidas a partir da posição (R, C) - usada com a regra especial do jogo. */
 valid_move_pos([BoardState,CP],R,C,Moves):-
     findall([R,C,V,H],
     (
@@ -61,7 +60,8 @@ valid_move_pos([BoardState,CP],R,C,Moves):-
     unzipMove(Move, R, C, V, H),
     move([R, C, V, H], [BoardState, CP], NewGameState,'PC').
 
-
+%valid_moves_aux(-GameState, -Positions, +Moves)
+/* Obtem todas as jogadas válidas para todas as posições.  */
 valid_moves_aux(GameState, [], Moves) :- !.
 valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
     unzipPos(Head, R, C),
@@ -90,6 +90,8 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
     valid_moves_aux([BoardState,CP], Tail,MoreIntermediatePlays),
     append(IntermediateMoves,  MoreIntermediatePlays, Moves).
 
+%valid_pos(-GameState, +Positions)
+/* Obtém todas as posições possíveis de jogar. */
 valid_pos([BoardState, CP], Positions) :-
     findall(R-C,
     (
@@ -103,8 +105,3 @@ valid_pos([BoardState, CP], Positions) :-
         ; isWhite(Col))
     ),
     Positions).
-
-%Level 2
-%choose_move(GameState, CP, 2, Move):- %select move based on board evaluation
-
-%isValidPos(Row, Collum, Vertical, Horizontal, Board, Player) 

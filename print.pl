@@ -1,21 +1,4 @@
-/*
-Okay so it's a text based game, player needs to provide a row and a column,
-both attributes between 0 and 8 (or 1 to 9). Also player needs to 
-say if they want to start to move horizontally or vertically.
-
-Move: 1 vertical + 2 horizontal or 2 vertical + 1 horizontal
-Imagine that the player says he wants to move the piece in (1,2), thinking that it's 0 to 8
-If it's 1 vertical + 2 horizontal, we need to move to the next list and change inside list index
-2 values-->(2,4)
-
-In the penultimate column we can do 2 vertical + 1 horizontal, if we do the other move, we need 
-to move the horizontal way towards the left (same with the last column) 
-
-Players can only pick spaces that have either the value "black" or "white"
-
-
-To check if either player won we need to see if the first two lists are filled with white, if so white player won or
-if the last two lists are filled with black, if so black player won*/
+/* Predicados de impressão da representação visual do jogo */
 
 symbol(0,S):- S='-'.
 symbol(-1,S):- S='B'.
@@ -32,6 +15,7 @@ letter(7, L) :- L='6'.
 letter(8, L) :- L='7'.
 letter(9, L) :- L='8'.
 
+/* Predicado principal */
 display_game([BoardState, CP]) :-
     print('CP: '), print(CP), nl,
     write('   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |\n'),

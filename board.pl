@@ -2,6 +2,8 @@
 :- consult('./utils.pl').
 :- consult('./print.pl').
 
+
+/* Predicados de validação de posições no tabuleiro */
 isEmpty(Pos) :- Pos == 0.
 isBlack(Pos) :- Pos == (-1); Pos == (-3).
 isWhite(Pos) :- Pos == 1; Pos == (-3).
@@ -9,15 +11,19 @@ isOnlyWhite(Pos) :- Pos == 1.
 isOnlyBlack(Pos) :- Pos == -1.
 isMPos(Pos) :- Pos == -3.
 isEqual(Pos1, Pos2) :- Pos1 == Pos2.
+
+/* Predicados de validação do jogador corrente */
 isPlayer1(CP) :- CP == 'P1'.
 isPlayer2(CP) :- CP == 'P2'.
+
+%changePlayer(-CP, -NewCP)
+/* Troca o jogador corrente. */
 changePlayer('P1', 'P2').
 changePlayer('P2', 'P1').
 
 
 %isValidPos(Row, Collum, Vertical, Horizontal, Board, Player)
-%Checks if R and C give a valid position and if R + V and C + H do as well.
-%If not, its not possible to play.
+/* Verifica se R e C dão uma posição válida e se R + H e C + V também. */
 isValidPos('').
 isValidPos([R, C, V, H], [BoardState, CP]) :-
     H1 is R + (H),
@@ -40,7 +46,8 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
       )
     ).
 
-
+%move(-Move, -GameState, +NewGameState, -Type)
+/* Executa jogada, atualizando o estado interno do jogo */
 move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP], Type) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
@@ -99,22 +106,12 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP], Type) :-
     ).
     
 
+/* Predicado para impressão de mensagens de erro. */
 error(GameState) :- print(GameState).
 
-/*
-"O jogo termina quando um dos jogadores consegue que todas as suas pedras atinjam a posição inicial das pedras do seu adversário."
 
-Player white wins if the first two rows (indeGameStatees 0 and 1---> A and B) only have white pieces
-Player black wins if the last two rows (indeGameStatees 7 and 8--->H and I) only have black pices
-
-We can check this using the function list_member:
--For the first two rows we check lets say they are in the variable Row, we check: list_member(0, Row), if we get a yes, it means 
-theres empty spaces there, so the game didnt end, no one is a winner (also idea to check if game ended); we should also check 
-list_member(-1,Row), if we get yes, Player black hasnt won. If we get no to both we are golden
-- Same logic for the last two rows but we check list_member(1,Row).
-*/
-
-
+%game_over(-GameState, +Winner)
+/* Consoante o estado de GameState, declara um vencedor Winner se este já existir. */
 game_over(_, 'P1').
 game_over(_, 'P2').
 game_over([BoardState, CP], Winner):- 
@@ -123,6 +120,7 @@ game_over([BoardState, CP], Winner):-
    ; check_BlackPlayer_won(BoardState, CP, Winner)
    ).
 
+/* Verifica se o jogador 1 ganhou */
 check_WhitePlayer_won(X, Y, Winner) :- 
    nth0(7, X, Row), 
    \+list_member(0, Row),
@@ -132,6 +130,7 @@ check_WhitePlayer_won(X, Y, Winner) :-
    \+list_member(-1, Row1),
    game_over([X, Y], 'P1').
 
+/* Verifica se o jogador 2 ganhou */
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
    \+list_member(0, Row), 
