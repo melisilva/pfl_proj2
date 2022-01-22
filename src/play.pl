@@ -4,7 +4,7 @@
 :-include('./computer.pl').
 
 
-%initial_state(-GameState)
+%initial_state(+GameState)
 /* Inicia a representação interna do jogo */
 initial_state([[
     [1,1,1,1,1,1,1,1,1],
@@ -18,11 +18,11 @@ initial_state([[
     [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ], 'P1']).
 
-%loop(-I, _)
+%loop(+I, _)
 /* Predicado para terminar o predicado loop/3 */
 loop(-1, _).
 
-%loop(-I, -GameState)
+%loop(+I, -GameState)
 /* Ciclo do jogo humano vs. humano. */
 loop(I, [BoardState, CP]) :-
     askForInput(R, C, V, H, [BoardState, CP]),

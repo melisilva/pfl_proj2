@@ -1,5 +1,5 @@
 
-%check_horizontal_and_vertical(H, V)
+%check_horizontal_and_vertical(-H, -V)
 /* Verifica se a jogada formada por H e V segue o movimento em L */
 check_horizontal_and_vertical(H,V):-
     ((H==2; H== (-2)),(V==1; V== (-1)));

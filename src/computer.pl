@@ -28,9 +28,9 @@ valid_V_H(-2, 1).
 valid_V_H(2, -1).
 valid_V_H(-2, -1).
 
-%valid_move_pos(-GameState, -R, -C, +Moves)
+%valid_move_pos(-GameState, -R, -C, ?Moves)
 /* Obtém todas as jogadas válidas a partir da posição (R, C) - usada com a regra especial do jogo. */
-valid_move_pos([BoardState,CP],R,C,Moves):-
+valid_move_pos([BoardState,CP], R, C, Moves):-
     findall([R,C,V,H],
     (
         valid_V_H(V, H),

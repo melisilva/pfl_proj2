@@ -16,13 +16,13 @@ isEqual(Pos1, Pos2) :- Pos1 == Pos2.
 isPlayer1(CP) :- CP == 'P1'.
 isPlayer2(CP) :- CP == 'P2'.
 
-%changePlayer(-CP, -NewCP)
+%changePlayer(+CP, +NewCP)
 /* Troca o jogador corrente. */
 changePlayer('P1', 'P2').
 changePlayer('P2', 'P1').
 
 
-%isValidPos(Row, Collum, Vertical, Horizontal, Board, Player)
+%isValidPos(+R, +C, +V, +H, -GameState)
 /* Verifica se R e C dão uma posição válida e se R + H e C + V também. */
 isValidPos('').
 isValidPos([R, C, V, H], [BoardState, CP]) :-
@@ -46,7 +46,7 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
       )
     ).
 
-%move(-Move, -GameState, +NewGameState, -Type)
+%move(-Move, -GameState, -NewGameState, -Type)
 /* Executa jogada, atualizando o estado interno do jogo */
 move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP], Type) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
@@ -109,7 +109,7 @@ move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP], Type) :-
 error(GameState) :- print(GameState).
 
 
-%game_over(-GameState, +Winner)
+%game_over(+GameState, -Winner)
 /* Consoante o estado de GameState, declara um vencedor Winner se este já existir. */
 game_over(-1, 'P1').
 game_over(-1, 'P2').
