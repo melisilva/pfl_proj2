@@ -28,16 +28,9 @@ loop(I, [BoardState, CP]) :-
     askForInput(R, C, V, H, [BoardState, CP]),
     (move([R, C, V, H], [BoardState, CP], NewGameState,'Human')
     ->(game_over(NewGameState, Winner)
-      -> congratulate(Winner), play
+      -> play
       ; loop(0, NewGameState))
     ; loop(I, [BoardState, CP])).
-
-%congratulate(-Y)
-/* Imprime mensagem de vitória do jogador em Y. */
-congratulate(Y) :-
-   print('Congrats on winning the game, player '),
-   print(Y),
-   nl.
 
 %unzipMove(-Move, +R, +C, +V, +H)
 /* Desdobra Move nos elementos singulares R, C, V e H. */

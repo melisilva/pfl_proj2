@@ -33,14 +33,14 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
     (isPlayer1(CP)
     -> (isWhite(Col)
         -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
-            ; error('The computed position is not within the board.'), nl, fail
+            ; error('The computed position is not within the board.'), nl
            )
         ; isWhite(Col), !
        )
     ; (CP \= 'P1', isBlack(Col)
       -> (H1 =< 8, H1 >= 0, V1 =< 8, V1 >= 0
          -> isValidPos('')
-         ; error('The computed position is not within the board.'), nl, fail
+         ; error('The computed position is not within the board.'), nl
          )
       ; isBlack(Col), !
       )
@@ -115,9 +115,9 @@ game_over(-1, 'P1').
 game_over(-1, 'P2').
 game_over([BoardState, CP], Winner):- 
    (isPlayer2(CP)
-   -> check_WhitePlayer_won(BoardState, CP, Winner)
-   ; check_BlackPlayer_won(BoardState, CP, Winner)
-   ).
+   -> check_WhitePlayer_won(BoardState, CP, Winner), print('Congrats on winning the game, '), print(Winner), nl, nl
+   ; check_BlackPlayer_won(BoardState, CP, Winner), print('Congrats on winning the game, '), print(Winner), nl, nl
+   ),
 
 /* Verifica se o jogador 1 ganhou */
 check_WhitePlayer_won(-1, -1, Winner).
