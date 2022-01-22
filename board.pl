@@ -51,7 +51,6 @@ isValidPos([R, C, V, H], [BoardState, CP]) :-
 move([R, C, V, H], [BoardState, CP], [NewBoardState, NewCP], Type) :-
     nth0(R, BoardState, Line), %Get the corresponding line.
     nth0(C, Line, Col), %Get the corresponding collumn.
-    print('Col: '), print(Col), nl,
     I1 is R + (H),
     nth0(I1, BoardState, Line1),
     I2 is C + (V),

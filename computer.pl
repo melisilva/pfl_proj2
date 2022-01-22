@@ -5,7 +5,6 @@
 /* Escolhe a jogada do computador */
 choose_move(GameState, Move, Level) :-
     valid_moves(GameState, Moves),
-    print(Moves),nl,nl,
     length(Moves, N),
     random(1, N, Index),
     nth1(Index, Moves, Move).
