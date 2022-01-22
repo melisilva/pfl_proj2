@@ -50,15 +50,15 @@ loop_PC([BoardState, CP], Type) :-
     (Type == 'Human'
     -> askForInput(R, C, V, H, [BoardState, CP]), 
       (move([R, C, V, H], [BoardState, CP], NewGameState,'Human') 
-      ->(game_over(NewGameState, Winner), Winner == 'Human'
-        -> congratulate('Human'), play
+      ->(game_over(NewGameState, Winner)
+        -> congratulate(Winner), play
         ; loop_PC(NewGameState, 'PC'))
       ; loop_PC([BoardState, CP], 'Human'))
     ; choose_move([BoardState, CP], Move, Level),
       unzipMove(Move, R, C, V, H),
       (move([R, C, V, H], [BoardState, CP], NewGameState,'PC')
-      -> (game_over(NewGameState, Winner), Winner == 'Human'
-         -> congratulate('Human'), play
+      -> (game_over(NewGameState, Winner)
+         -> play
          ; loop_PC(NewGameState, 'Human'))
       ; loop_PC([BoardState, CP], 'PC')
       )).
