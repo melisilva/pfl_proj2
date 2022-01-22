@@ -35,21 +35,21 @@ A representação interna do jogo é uma lista chamada *GameState*. Esta inclui 
 
 Em baixo, temos um possível estado inicial de um jogo, visto por um jogador e no código (- é vazio, correspondente a 0; W é uma peça branca, correspondente a 1; B é uma peça preta, correspondente a -1).
 
-![image-20220121184507229](image-20220121184507229.png)
+![image-20220121184507229](imagens/image-20220121184507229.png)
 
 Um estado final (ganharam as brancas).
 
-![image-20220121184755374](image-20220121184755374.png)
+![image-20220121184755374](imagens/image-20220121184755374.png)
 
 E um estado intermédio, com uma posição com *M* (duas peças de cores diferentes), correspondente a -3.
 
-![image-20220121185056293](image-20220121185056293.png)
+![image-20220121185056293](imagens/image-20220121185056293.png)
 
 ### Visualização do Estado do Jogo
 
 O jogo possui um *Menu* que funciona através do *Input* de números, servindo para direcionar o jogador ao modo que preferir jogar. Este está definido em ***menu.pl***.
 
-![Imagem do Menu](unknown.png)
+![Imagem do Menu](imagens/unknown.png)
 
 Qualquer modo do jogo é representado da mesma forma, utilizando uma estrutura parecida a uma tabela e com índices de coordenadas para ajudar a fornecer jogadas. Imagens desta representação estão na subsecção acima. A representação é *impressa* sempre que *displayGame* é chamado - este predicado e seus auxiliares estão em ***print.pl***.
 
@@ -122,8 +122,8 @@ Além disto, ***move/4*** impede um jogador de ocupar duplamente uma posição c
 O final do jogo é testado com o predicado ***game_over/2***. O teste passa por verificar as 2 primeiras e 2 últimas linhas do tabuleiro: para o jogador 1, se as duas últimas estiverem preenchidas pelas suas peças brancas (1), então este ganhou; para o jogador 2, vice-versa, com as suas peças pretas (-1).
 
 ```perl
-game_over(_, 'P1').
-game_over(_, 'P2').
+game_over(-1, 'P1').
+game_over(-1, 'P2').
 game_over([BoardState, CP], Winner):- 
    (isPlayer2(CP)
    -> check_WhitePlayer_won(BoardState, CP, Winner)
@@ -137,7 +137,7 @@ check_WhitePlayer_won(X, Y, Winner) :-
    nth0(8, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(-1, Row1),
-   game_over([X, Y], 'P1').
+   game_over(-1, 'P1').
 
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
@@ -146,27 +146,31 @@ check_BlackPlayer_won(X, Y, Winner):-
    nth0(1, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(1, Row1),
-   game_over([X, Y], 'P2').
+   game_over(-1, 'P2').
 ```
 
 ### Lista de Jogadas Válidas
 
-O predicado **valid_moves/2** gera todas as jogadas possíveis. Isto serve para permitir os modos de jogo contra o computador ou mesmo o jogo entre dois computadores. O predicado divide-se em duas partes. Inicialmente, procuramos no tabuleiro do estado atual do jogo todas as posições que o computador pode jogar - no máximo, serão 16 posições. À medida que peças se colocam nas linhas horizontais extremas, este número diminui.
+O predicado **valid_moves/2** gera todas as jogadas possíveis. Isto serve para permitir os modos de jogo contra o computador ou mesmo o jogo entre dois computadores. O predicado divide-se em duas partes. Inicialmente, procuramos no tabuleiro do estado atual do jogo todas as posições que o computador pode jogar - no máximo, serão 16 posições. À medida que peças se colocam nas linhas horizontais extremas, este número diminui - para ajudar nesta verificação, temos ***doesNotGoBack/2***.
 
 Geram-se as posições válidas com ***findall/3***. 
 
 ```perl
+doesNotGoBack(R, CP) :-
+    (isPlayer1(CP)
+    -> R < 7
+    ; R > 1).
+
+%valid_pos(-GameState, +Positions)
 valid_pos([BoardState, CP], Positions) :-
     findall(R-C,
     (
-        (isPlayer1(CP)
-        -> R < 7
-        ; R > 1), 
         nth0(R, BoardState, Line),
         nth0(C, Line, Col),
         (isPlayer2(CP)
         -> isBlack(Col)
-        ; isWhite(Col))
+        ; isWhite(Col)),
+        doesNotGoBack(R, CP)
     ),
     Positions).
 ```
@@ -207,9 +211,13 @@ No *goal* fornecido a esta invocação de ***findall/3***, verificamos tudo o qu
 
 ### **Jogada do Computador**
 
-A jogada do computador é sempre aleatória. Não implementamos o nível 2 da inteligência artificial. Limita-se a escolher um número no intervalo definido pelo tamanho da lista de jogadas válidas e efetua essa jogada utilizando, mais uma vez, ***move/4***.
+A jogada do computador é sempre aleatória por não implementarmos o nível 2 da inteligência artificial. Limita-se a escolher um número no intervalo definido pelo tamanho da lista de jogadas válidas e efetua essa jogada utilizando, mais uma vez, ***move/4***.
 
-Visto guardarmos os valores possíveis em pares (R-C) ou listas ([R, C, V, H]), temos predicados de prefixos *unzip* que os passam para elementos singulares mais simples de serem usados por outros predicados.
+Visto guardarmos os valores possíveis em pares (R-C) ou listas ([R, C, V, H]), temos predicados de prefixos *unzip* que passam para elementos singulares os valores destes, para serem usados por outros predicados de forma mais simples.
+
+Testámos um jogo de PC vs. PC e ele terminou, em baixo, pode ver-se o que acontece.
+
+![img](imagens/unknown-16428569318113.png)
 
 ## Conclusão
 

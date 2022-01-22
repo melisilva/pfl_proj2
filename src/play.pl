@@ -70,7 +70,7 @@ loop_only_PC([BoardState, CP], Type) :-
       unzipMove(Move, R, C, V, H),
       (move([R, C, V, H], [BoardState, CP], NewGameState,'PC')
       -> (game_over(NewGameState, Winner)
-         -> print('Thank God! They did not explode!'), nl, play
+         -> print('Thank God! They did not explode!'), nl, nl, play
          ; loop_only_PC(NewGameState, 'PC'))
       ; loop_only_PC([BoardState, CP], 'PC')
       ).
