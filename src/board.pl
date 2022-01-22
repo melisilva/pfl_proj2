@@ -120,6 +120,7 @@ game_over([BoardState, CP], Winner):-
    ).
 
 /* Verifica se o jogador 1 ganhou */
+check_WhitePlayer_won(-1, -1, Winner).
 check_WhitePlayer_won(X, Y, Winner) :- 
    nth0(7, X, Row), 
    \+list_member(0, Row),
@@ -129,9 +130,10 @@ check_WhitePlayer_won(X, Y, Winner) :-
    \+list_member(0, Row1), 
    \+list_member(-1, Row1),
    \+list_member(-3, Row1),
-   game_over(-1, 'P1').
+   check_WhitePlayer_won(-1, -1, 'P1').
 
 /* Verifica se o jogador 2 ganhou */
+check_BlackPlayer_won(-1, -1, Winner).
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
    \+list_member(0, Row), 
@@ -141,4 +143,4 @@ check_BlackPlayer_won(X, Y, Winner):-
    \+list_member(0, Row1), 
    \+list_member(1, Row1),
    \+list_member(-3, Row1),
-   game_over(-1, 'P2').
+   check_BlackPlayer_won(-1, -1, 'P2').
