@@ -90,18 +90,25 @@ valid_moves_aux([BoardState, CP], [Head|Tail], Moves) :-
     valid_moves_aux([BoardState,CP], Tail,MoreIntermediatePlays),
     append(IntermediateMoves,  MoreIntermediatePlays, Moves).
 
+%doesNotGoBack(-R, -CP)
+/* Verifica que a linha horizontal escolhida não é uma daquelas onde o jogador tem de colocar as suas peças.
+É feito para que o computador não ande para trás e para a frente com peças que já estão numa posição final. */
+doesNotGoBack(R, CP) :-
+    (isPlayer1(CP)
+    -> R < 7
+    ; R > 1).
+
 %valid_pos(-GameState, +Positions)
 /* Obtém todas as posições possíveis de jogar. */
 valid_pos([BoardState, CP], Positions) :-
     findall(R-C,
     (
-        (isPlayer1(CP)
-        -> R < 7
-        ; R > 1), 
         nth0(R, BoardState, Line),
         nth0(C, Line, Col),
         (isPlayer2(CP)
         -> isBlack(Col)
-        ; isWhite(Col))
+        ; isWhite(Col)),
+        doesNotGoBack(R, CP)
     ),
     Positions).
+

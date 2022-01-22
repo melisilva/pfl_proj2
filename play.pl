@@ -79,7 +79,7 @@ loop_only_PC([BoardState, CP], Type) :-
 /* Direciona a execução para o modo do jogo correto. */
 menu_option(1):-
     initial_state(GameState),
-    display_game(GameState),
+    %display_game(GameState),
     loop(0, GameState).
 
 menu_option(2):-

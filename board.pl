@@ -112,8 +112,8 @@ error(GameState) :- print(GameState).
 
 %game_over(-GameState, +Winner)
 /* Consoante o estado de GameState, declara um vencedor Winner se este já existir. */
-game_over(_, 'P1').
-game_over(_, 'P2').
+game_over(-1, 'P1').
+game_over(-1, 'P2').
 game_over([BoardState, CP], Winner):- 
    (isPlayer2(CP)
    -> check_WhitePlayer_won(BoardState, CP, Winner)
@@ -128,14 +128,14 @@ check_WhitePlayer_won(X, Y, Winner) :-
    nth0(8, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(-1, Row1),
-   game_over([X, Y], 'P1').
+   game_over(-1, 'P1').
 
 /* Verifica se o jogador 2 ganhou */
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
    \+list_member(0, Row), 
-   \+list_member(1, Row), 
+   \+list_member(1, Row),
    nth0(1, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(1, Row1),
-   game_over([X, Y], 'P2').
+   game_over(-1, 'P2').
