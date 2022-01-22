@@ -13,9 +13,9 @@ initial_state([[
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1]
+    [0,0,0,1,0,0,0,0,0],
+    [1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,0,1,1,1,1]
 ], 'P1']).
 
 %loop(-I, _)
@@ -28,7 +28,7 @@ loop(I, [BoardState, CP]) :-
     askForInput(R, C, V, H, [BoardState, CP]),
     (move([R, C, V, H], [BoardState, CP], NewGameState,'Human')
     ->(game_over(NewGameState, Winner)
-      -> congratulate(Winner), menu
+      -> congratulate(Winner), play
       ; loop(0, NewGameState))
     ; loop(I, [BoardState, CP])).
 
@@ -51,14 +51,14 @@ loop_PC([BoardState, CP], Type) :-
     -> askForInput(R, C, V, H, [BoardState, CP]), 
       (move([R, C, V, H], [BoardState, CP], NewGameState,'Human') 
       ->(game_over(NewGameState, Winner), Winner == 'Human'
-        -> congratulate('Human'), menu
+        -> congratulate('Human'), play
         ; loop_PC(NewGameState, 'PC'))
       ; loop_PC([BoardState, CP], 'Human'))
     ; choose_move([BoardState, CP], Move, Level),
       unzipMove(Move, R, C, V, H),
       (move([R, C, V, H], [BoardState, CP], NewGameState,'PC')
       -> (game_over(NewGameState, Winner), Winner == 'Human'
-         -> congratulate('Human'), menu
+         -> congratulate('Human'), play
          ; loop_PC(NewGameState, 'Human'))
       ; loop_PC([BoardState, CP], 'PC')
       )).
@@ -70,7 +70,7 @@ loop_only_PC([BoardState, CP], Type) :-
       unzipMove(Move, R, C, V, H),
       (move([R, C, V, H], [BoardState, CP], NewGameState,'PC')
       -> (game_over(NewGameState, Winner)
-         -> print('Thank God! They did not explode!'), nl, menu
+         -> print('Thank God! They did not explode!'), nl, play
          ; loop_only_PC(NewGameState, 'PC'))
       ; loop_only_PC([BoardState, CP], 'PC')
       ).

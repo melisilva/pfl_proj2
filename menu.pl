@@ -48,7 +48,7 @@ menu_option(5):-
   write('  There is a special rule, however: if a stone jumps to a square that has the opponents stone\n'),
   write('the player can play that stone again, this cycle repeats itself until the stone hits an empty square.\n'),
   write('  The game ends when one of the players stones occupies the original positions of their opponents stones.\n\n'),
-  menu.
+  play.
 
 /*Saída do jogo.*/
 menu_option(6):-

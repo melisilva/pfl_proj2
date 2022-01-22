@@ -63,7 +63,7 @@ loop(I, [BoardState, CP]) :-
     askForInput(R, C, V, H, [BoardState, CP]),
     (move([R, C, V, H], [BoardState, CP], NewGameState, 'Human')
     ->(game_over(NewGameState, Winner)
-      -> menu
+      -> play
       ; loop(0, NewGameState))
     ; loop(I, [BoardState, CP])).
 ```
