@@ -13,7 +13,7 @@ Ambos os elementos contribuíram 50%, totalizando 100%.
 
 ## Instalação e Execução
 
-Para executar o jogo, apenas é preciso consultar o ficheiro ***menu.pl***. Para executar o jogo, deve-se invocar o predicado ***play***.
+Para executar o jogo, apenas é preciso consultar o ficheiro ***play.pl***. Para executar o jogo, deve-se invocar o predicado ***play***.
 
 ## Descrição do Jogo
 
