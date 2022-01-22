@@ -7,15 +7,9 @@
 %initial_state(-GameState)
 /* Inicia a representação interna do jogo */
 initial_state([[
-    [1,1,1,1,1,1,1,1,1],
-    [1,1,1,1,1,1,1,1,1],
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ], 'P1']).
 
 %loop(-I, _)
@@ -44,7 +38,7 @@ loop_PC([BoardState, CP], Type) :-
     -> askForInput(R, C, V, H, [BoardState, CP]), 
       (move([R, C, V, H], [BoardState, CP], NewGameState,'Human') 
       ->(game_over(NewGameState, Winner)
-        -> congratulate(Winner), play
+        -> play
         ; loop_PC(NewGameState, 'PC'))
       ; loop_PC([BoardState, CP], 'Human'))
     ; choose_move([BoardState, CP], Move, Level),
