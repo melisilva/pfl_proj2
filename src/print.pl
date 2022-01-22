@@ -17,10 +17,11 @@ letter(9, L) :- L='8'.
 
 /* Predicado principal */
 display_game([BoardState, CP]) :-
-    print('CP: '), print(CP), nl,
+    print('CP: '), print(CP), nl, nl,
     write('   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |\n'),
     write('---|---|---|---|---|---|---|---|---|---|\n'),
-    printMatrix(BoardState, 1).
+    printMatrix(BoardState, 1),
+    nl.
 
 printMatrix([], 10).
 
