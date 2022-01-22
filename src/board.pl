@@ -124,9 +124,11 @@ check_WhitePlayer_won(X, Y, Winner) :-
    nth0(7, X, Row), 
    \+list_member(0, Row),
    \+list_member(-1, Row),
+   \+list_member(-3,Row),
    nth0(8, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(-1, Row1),
+   \+list_member(-3, Row1),
    game_over(-1, 'P1').
 
 /* Verifica se o jogador 2 ganhou */
@@ -134,7 +136,9 @@ check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
    \+list_member(0, Row), 
    \+list_member(1, Row),
+   \+list_member(-3,Row),
    nth0(1, X, Row1), 
    \+list_member(0, Row1), 
    \+list_member(1, Row1),
+   \+list_member(-3, Row1),
    game_over(-1, 'P2').

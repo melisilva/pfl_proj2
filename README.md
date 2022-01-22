@@ -119,7 +119,7 @@ Além disto, ***move/4*** impede um jogador de ocupar duplamente uma posição c
 
 ### Final do Jogo
 
-O final do jogo é testado com o predicado ***game_over/2***. O teste passa por verificar as 2 primeiras e 2 últimas linhas do tabuleiro: para o jogador 1, se as duas últimas estiverem preenchidas pelas suas peças brancas (1), então este ganhou; para o jogador 2, vice-versa, com as suas peças pretas (-1).
+O final do jogo é testado com o predicado ***game_over/2***. O teste passa por verificar as 2 primeiras e 2 últimas linhas do tabuleiro: para o jogador 1, se as duas últimas estiverem preenchidas pelas suas peças brancas (1), então este ganhou; para o jogador 2, vice-versa, com as suas peças pretas (-1). Verificamos isto com a ajuda do predicado **list_member/2**, vemos se na linha existe algum espaço vazio (0) ou alguma das peças que começou o jogo nestas linhas (peças brancas começam o jogo nas 2 primeiras linhas; peças pretas começam-o nas 2 últimas) ou se alguma posição está duplamente ocupada (-3). 
 
 ```perl
 game_over(-1, 'P1').
