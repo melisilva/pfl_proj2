@@ -115,12 +115,12 @@ game_over(-1, 'P1').
 game_over(-1, 'P2').
 game_over([BoardState, CP], Winner):- 
    (isPlayer2(CP)
-   -> check_WhitePlayer_won(BoardState, CP, Winner), print('Congrats on winning the game, '), print(Winner), nl, nl
-   ; check_BlackPlayer_won(BoardState, CP, Winner), print('Congrats on winning the game, '), print(Winner), nl, nl
-   ),
+   -> check_WhitePlayer_won(BoardState, CP, Winner)
+   ; check_BlackPlayer_won(BoardState, CP, Winner)
+   ).
 
 /* Verifica se o jogador 1 ganhou */
-check_WhitePlayer_won(-1, -1, Winner).
+check_WhitePlayer_won(-1, -1, Winner):-print('Congrats on winning the game, '), print(Winner), nl, nl.
 check_WhitePlayer_won(X, Y, Winner) :- 
    nth0(7, X, Row), 
    \+list_member(0, Row),
@@ -133,7 +133,7 @@ check_WhitePlayer_won(X, Y, Winner) :-
    check_WhitePlayer_won(-1, -1, 'P1').
 
 /* Verifica se o jogador 2 ganhou */
-check_BlackPlayer_won(-1, -1, Winner).
+check_BlackPlayer_won(-1, -1, Winner):-print('Congrats on winning the game, '), print(Winner), nl, nl.
 check_BlackPlayer_won(X, Y, Winner):-
    nth0(0, X, Row), 
    \+list_member(0, Row), 
